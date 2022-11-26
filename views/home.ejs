@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>home page</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi aliquam hic
-      voluptatibus iure quos nobis quasi assumenda consectetur, nulla ad beatae?
-      Sequi omnis est amet maxime. Ad quisquam ea odit.
-    </p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. In incidunt
-      mollitia laborum non, adipisci id alias quod ab nulla asperiores, libero
-      maxime error est ut, velit iste rem vero iusto!
-    </p>
-  </body>
-</html>
+<!-- Header -->
+<%- include('partials/head') %>
+
+<!-- Navbar -->
+<%- include('partials/navbar') %>
+
+<!-- main page structure -->
+<div class="container text-center">
+  <div class="row">
+    <h1>Main Page</h1>
+    <div id="mainDiv"></div>
+  </div>
+
+  <!-- footer -->
+  <script src="/js/mainLogic.js"></script>
+  <%- include('partials/footer') %>
+</div>

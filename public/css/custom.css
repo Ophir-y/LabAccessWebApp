@@ -1,0 +1,41 @@
+tr.odd {
+  /* margin: 5px; */
+  /* border: 2px solid #d0e8ee; */
+  background-color: #e4f1f5;
+  padding: 2px;
+  text-align: center;
+  /* border-radius: 20px; */
+}
+tr.even {
+  /* margin: 5px; */
+  /* border: 2px solid #56d2f1; */
+  background-color: #8dd9ec;
+  padding: 2px;
+  text-align: center;
+  /* border-radius: 20px; */
+}
+tr.hoveredOver {
+  /* margin: 5px; */
+  /* border: 2px solid #1982c4; */
+  background-color: #ffca3a;
+  padding: 2px;
+  text-align: center;
+  /* border-radius: 20px; */
+}
+img {
+  display: flex;
+}
+
+.flex {
+  display: flex;
+}
+
+#divtable {
+  /* background-color: #fed9ff; */
+  width: 30vw;
+  height: 70vh;
+  overflow-x: auto;
+  overflow-y: auto;
+  text-align: center;
+  padding: 20px;
+}
