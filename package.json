@@ -1,5 +1,25 @@
 {
   "dependencies": {
-    "axios": "^1.2.0"
-  }
+    "axios": "^1.2.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  },
+  "name": "labaccesswebapp",
+  "description": "This Repo is for the Website we are building for the Lab Access project",
+  "version": "1.0.0",
+  "main": "mainLogic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ophir-y/LabAccessWebApp.git"
+  },
+  "author": "Ophir Yoram and Ben Rote",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ophir-y/LabAccessWebApp/issues"
+  },
+  "homepage": "https://github.com/Ophir-y/LabAccessWebApp#readme"
 }
