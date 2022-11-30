@@ -57,10 +57,11 @@ function tableRowCreate(pokeid, is_even) {
 const form = document.querySelector("#addPokeForm");
 const input = document.querySelector("#pokeInputText");
 let is_even = true;
+// get text cursor to be in box on load of page
 window.onload = () => {
   document.getElementById("pokeInputText").focus();
 };
-console.log(tableRowCreate);
+// console.log(tableRowCreate);
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const pokeNum = input.value;

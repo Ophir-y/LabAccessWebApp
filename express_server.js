@@ -2,17 +2,33 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const path = require("path");
-app.set("view engine", "ejs");
+// set public directory
 app.use(express.static(path.join(__dirname, "/public")));
-app.set("views", path.join(__dirname, "/views"));
 
-// Get logic
+// set types of usasble requests
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// set views as the views directory.
+app.set("views", path.join(__dirname, "/views"));
+// set view engine to ejs.
+app.set("view engine", "ejs");
+
+// routs:
+
+// routs to different pages on website:
 app.get("/", (req, res) => {
   res.render("home");
 });
 app.get("/people", (req, res) => {
   res.render("people");
 });
+
+app.post("/people", (req, res) => {
+  console.log(req.body);
+  res.send("it Worked!!");
+});
+
 app.get("/groups", (req, res) => {
   res.render("groups");
 });
@@ -22,7 +38,6 @@ app.get("/doors", (req, res) => {
 app.get("/permissions", (req, res) => {
   res.render("permissions");
 });
-
 // reply to any other path
 app.get("*", (req, res) => {
   res.send("not a valid path");

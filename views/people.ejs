@@ -15,15 +15,41 @@
       <!-- 1 of 2 -->
       <!-- form divider -->
       <div class="form">
-        <form action="/addPoke" id="addPokeForm">
-          <p>Enter Pokemon number to add it to list</p>
-          <div>
-            <input
-              type="text"
-              name="pokeInputText"
-              id="pokeInputText"
-              placeholder="Put Pokemon Number Here"
-            />
+        <form action="/people" method="post" class="addForm">
+          <p>Enter Person ID and Details to add to the list</p>
+          <div class="form">
+            <div class="row">
+              <label for="personID">ID:</label>
+              <input
+                type="text"
+                name="personID"
+                id="personID"
+                placeholder="ID"
+              />
+            </div>
+            <div class="row">
+              <label for="first_name">First Name</label>
+              <input
+                type="text"
+                name="first_name"
+                id="first_name"
+                placeholder="First Name"
+              />
+            </div>
+            <div class="row">
+              <label for="last_name">Last Name</label>
+              <input
+                type="text"
+                name="last_name"
+                id="last_name"
+                placeholder="Last Name"
+              />
+            </div>
+            <div class="row">
+              <label for="isAdmin">Admin?</label>
+              <input type="checkbox" name="isAdmin" id="isAdmin" />
+            </div>
+
             <button type="submit">Press To Submit</button>
           </div>
         </form>
