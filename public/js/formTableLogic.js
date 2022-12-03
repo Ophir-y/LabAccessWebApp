@@ -1,15 +1,7 @@
-function swapHoveredClass() {
-  this.classList.replace(`${this.dataset.origClass}`, "hoveredOver");
-}
-
-function returnOrigClass() {
-  this.classList.replace("hoveredOver", `${this.dataset.origClass}`);
-}
-
-function tableRowCreate(pokeid, is_even) {
+function tableRowCreate(pokeid) {
   if (isNaN(pokeid) || pokeid > 905 || pokeid < 1) {
     alert("must enter a number between 1-905");
-    return true;
+    return false;
   }
 
   // image link
@@ -24,17 +16,7 @@ function tableRowCreate(pokeid, is_even) {
   const Type = document.createElement("td");
   // give row element an id, 2 event listeners
   Person.id = pokeid;
-  Person.addEventListener("mouseenter", swapHoveredClass);
-  Person.addEventListener("mouseleave", returnOrigClass);
 
-  // give the tr a class depending on its evenness and define original class
-  if (!is_even) {
-    Person.classList.add("odd");
-    Person.dataset.origClass = "odd";
-  } else {
-    Person.classList.add("even");
-    Person.dataset.origClass = "even";
-  }
   Type.innerText = "type";
   // add lable
   const pokeNum = document.createElement("span");
@@ -51,24 +33,23 @@ function tableRowCreate(pokeid, is_even) {
   Person.appendChild(newimg);
   Person.appendChild(Type);
   container.appendChild(Person);
+  return true;
 }
 
 /*#################################### FORM START ##########################################*/
 const form = document.querySelector("#addPokeForm");
 const input = document.querySelector("#pokeInputText");
-let is_even = true;
+
 // get text cursor to be in box on load of page
 window.onload = () => {
   document.getElementById("pokeInputText").focus();
 };
-// console.log(tableRowCreate);
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const pokeNum = input.value;
-  if (tableRowCreate(pokeNum, is_even)) {
+  if (!tableRowCreate(pokeNum)) {
     console.log("no pokemon belongs to that ID!!!, try again!!");
-  } else {
-    is_even = !is_even;
   }
   input.value = "";
   document.getElementById("pokeInputText").focus();

@@ -20,24 +20,41 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("home");
 });
+
+// routs for 'people' page.
+// includes get and post for page and form logic
 app.get("/people", (req, res) => {
   res.render("people");
 });
 
 app.post("/people", (req, res) => {
   console.log(req.body);
-  res.send("it Worked!!");
+  res.redirect("/people");
 });
 
+// routs for 'groups' page.
+// includes get and post for page and form logic
 app.get("/groups", (req, res) => {
   res.render("groups");
 });
+
+// routs for 'doors' page.
+// includes get and post for page and form logic
 app.get("/doors", (req, res) => {
   res.render("doors");
 });
+
+// routs for 'permissions' page.
+// includes get and post for page and form logic
 app.get("/permissions", (req, res) => {
   res.render("permissions");
 });
+
+//pokemon!
+app.get("/poke", (req, res) => {
+  res.render("poke");
+});
+
 // reply to any other path
 app.get("*", (req, res) => {
   res.send("not a valid path");

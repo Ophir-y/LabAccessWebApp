@@ -6,75 +6,23 @@
 
 <!-- main page structure -->
 <div class="container text-center">
-  <div class="row">
-    <h1>Add Your Pokemon</h1>
+  <div class="row header">
+    <h1>People</h1>
   </div>
   <div class="row">
     <!-- FORM -->
-    <div class="col" id="formSide-Div">
-      <!-- 1 of 2 -->
-      <!-- form divider -->
-      <div class="form">
-        <form action="/people" method="post" class="addForm">
-          <p>Enter Person ID and Details to add to the list</p>
-          <div class="form">
-            <div class="row">
-              <label for="personID">ID:</label>
-              <input
-                type="text"
-                name="personID"
-                id="personID"
-                placeholder="ID"
-              />
-            </div>
-            <div class="row">
-              <label for="first_name">First Name</label>
-              <input
-                type="text"
-                name="first_name"
-                id="first_name"
-                placeholder="First Name"
-              />
-            </div>
-            <div class="row">
-              <label for="last_name">Last Name</label>
-              <input
-                type="text"
-                name="last_name"
-                id="last_name"
-                placeholder="Last Name"
-              />
-            </div>
-            <div class="row">
-              <label for="isAdmin">Admin?</label>
-              <input type="checkbox" name="isAdmin" id="isAdmin" />
-            </div>
-
-            <button type="submit">Press To Submit</button>
-          </div>
-        </form>
+    <%- include('partials/people/peopleForm') %>
+    <!-- Table Select Buttons -->
+    <div class="col col-lg-1">
+      <div class="mid_button">
+        <button type="button" class="btn btn-danger">Group</button>
+      </div>
+      <div class="mid_button">
+        <button type="button" class="btn btn-danger">DELETE!</button>
       </div>
     </div>
     <!-- TABLE -->
-    <div class="col" id="tableSide-Div">
-      <!-- 2 of 2 -->
-      <!-- table divider -->
-      <div class="container-lg">
-        <div class="table" id="divtable">
-          <table class="table" id="poketable">
-            <label for="poketable">People Table</label>
-            <thead>
-              <tr>
-                <th scope="col">NUM#</th>
-                <th scope="col">Pokemon Image</th>
-                <th scope="col">type</th>
-              </tr>
-            </thead>
-            <tbody id="container"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <%- include('partials/people/peopleTable') %>
   </div>
   <!-- footer -->
   <%- include('partials/footer') %>

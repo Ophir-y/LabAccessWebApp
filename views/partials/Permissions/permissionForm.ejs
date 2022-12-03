@@ -1,0 +1,89 @@
+<!-- 1 of 2 -->
+<!-- form divider -->
+
+<form action="/people" method="post" class="col col-lg-3" id="formSide-Div">
+  <p class="formLable">Enter permission ID and Details</p>
+  <div class="form">
+    <div class="row">
+      <label class="formLable" for="permissionID">ID:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="permissionID"
+        id="permissionID"
+        placeholder="ID"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="perType">Permission Type</label>
+      <input
+        list="permissionTypes"
+        class="formInput"
+        name="perType"
+        id="perType"
+        placeholder="Permission Type"
+      />
+      <datalist id="permissionTypes">
+        <option value="Door Access"></option>
+        <option value="Admin Privileges"></option>
+        <option value="Admin Add People"></option>
+        <option value="Admin Add Doors"></option>
+        <option value="Admin Add Permissions"></option>
+        <option value="Admin Add Admin"></option>
+      </datalist>
+    </div>
+    <div class="row">
+      <label class="formLable" for="initialDate">Initial Date:</label>
+      <input
+        type="date"
+        class="formInput"
+        name="initialDate"
+        id="initialDate"
+        placeholder="Initial Date"
+      />
+    </div>
+
+    <!-- expiry date -->
+    <!-- must be after initial date -->
+    <div class="row">
+      <label class="formLable" for="expiryDate">Expiry Date:</label>
+      <input
+        type="date"
+        class="formInput"
+        name="expiryDate"
+        id="expiryDate"
+        placeholder="Expiry Date"
+      />
+    </div>
+    <!-- Start time, defines the time where the permission starts to take effect daily -->
+    <!-- if no input is inserted, the permission will be granted for the whole day -->
+    <div class="row">
+      <label class="formLable" for="startTime">Start Time:</label>
+      <input
+        type="time"
+        class="formInput"
+        name="startTime"
+        id="startTime"
+        placeholder="Start Time"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="endTime">End Time:</label>
+      <input
+        type="time"
+        class="formInput"
+        name="endTime"
+        id="endTime"
+        placeholder="End Time"
+      />
+    </div>
+    <button type="submit" class="formButton">Press To Submit</button>
+  </div>
+
+  <p class="formLable">
+    Date - defines the period of time that the permission is valid.
+  </p>
+  <p class="formLable">
+    Time - defines the daily period of time that the permission is valid.
+  </p>
+</form>

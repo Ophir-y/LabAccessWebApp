@@ -1,41 +1,107 @@
-tr.odd {
-  /* margin: 5px; */
-  /* border: 2px solid #d0e8ee; */
-  background-color: #e4f1f5;
-  padding: 2px;
-  text-align: center;
-  /* border-radius: 20px; */
-}
-tr.even {
-  /* margin: 5px; */
-  /* border: 2px solid #56d2f1; */
-  background-color: #8dd9ec;
-  padding: 2px;
-  text-align: center;
-  /* border-radius: 20px; */
-}
-tr.hoveredOver {
-  /* margin: 5px; */
-  /* border: 2px solid #1982c4; */
-  background-color: #ffca3a;
-  padding: 2px;
-  text-align: center;
-  /* border-radius: 20px; */
-}
-img {
-  display: flex;
+/*######################### general styles ###################### */
+.header {
+  border-bottom: 1px solid;
+  border-color: black;
 }
 
 .flex {
   display: flex;
 }
 
-#divtable {
+img {
+  display: flex;
+}
+.footer {
+  text-align: center;
+  margin-top: 10%;
+}
+/*######################### table styles ###################### */
+#tableSide-Div {
   /* background-color: #fed9ff; */
-  width: 30vw;
-  height: 70vh;
+  /* width: 30vw; */
+  height: 100vh;
   overflow-x: auto;
   overflow-y: auto;
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
+}
+th {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 10px;
+}
+th[scope="col"] {
+  background-color: #4a6ea3;
+  color: #fff;
+}
+.table_checkbox {
+  width: 2vw;
+  min-width: 20px;
+}
+tr {
+  border: 1px solid rgb(190, 190, 190);
+  background-color: #e4f1f5;
+}
+tr:nth-child(even) {
+  border: 1px solid rgb(190, 190, 190);
+  background-color: #8dd9ec;
+}
+
+tbody tr:hover {
+  border: 1px solid rgb(190, 190, 190);
+  background-color: #ffca3a;
+}
+
+/*######################### button styles ###################### */
+.btn {
+  text-align: left;
+  margin-top: 5vh;
+  /* margin-right: 1vw; */
+  min-width: 75px;
+  max-width: 100%;
+  width: 5vw;
+}
+.btn-primary {
+  min-width: 92%;
+  min-height: 90%;
+  max-height: fit-content;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+.col {
+  align-self: stretch;
+}
+.row {
+  align-items: center;
+}
+.col-lg-1 {
+  min-width: 1vw;
+}
+/*######################### form styles ###################### */
+#formSide-Div {
+  border-right: 1px solid;
+  border-color: black;
+  text-align: left;
+  height: 100vh;
+  /* padding-left: 2vw; */
+}
+.formLable {
+  text-align: left;
+}
+
+.formInput {
+  max-width: 200px;
+  width: 80%;
+}
+
+.formButton {
+  --bs-gutter-x: 0rem;
+  --bs-gutter-y: -15px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+.form {
+  margin: 2vw;
 }

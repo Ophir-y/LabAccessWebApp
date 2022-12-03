@@ -8,10 +8,27 @@
 <div class="container text-center">
   <div class="row">
     <h1>Main Page</h1>
-    <div id="mainDiv"></div>
+    <div class="row" id="mainDiv">
+      <p>hello:</p>
+    </div>
+    <p>we are connected!</p>
   </div>
-
-  <!-- footer -->
-  <script src="/js/mainLogic.js"></script>
-  <%- include('partials/footer') %>
 </div>
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary">
+      Single Access Permission
+    </button>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-primary">
+      Group Access Permission
+    </button>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-primary">Primary</button>
+  </div>
+</div>
+<!-- footer -->
+<script src="/js/homeLogic.js"></script>
+<%- include('partials/footer') %>

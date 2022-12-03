@@ -1,0 +1,63 @@
+<!-- 1 of 2 -->
+<!-- form divider -->
+
+<form action="/people" method="post" class="col col-lg-3" id="formSide-Div">
+  <p class="formLable">Enter Person ID and Details</p>
+  <div class="form">
+    <div class="row">
+      <label class="formLable" for="personID">ID:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="personID"
+        id="personID"
+        placeholder="ID"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="first_name">First Name:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="first_name"
+        id="first_name"
+        placeholder="First Name"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="last_name">Last Name:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="last_name"
+        id="last_name"
+        placeholder="Last Name"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="isAdmin">Admin?</label>
+      <input type="checkbox" class="formInput" name="isAdmin" id="isAdmin" />
+    </div>
+    <div class="row">
+      <label class="formLable" for="last_name">Admin Password:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="admin_password"
+        id="admin_password"
+        placeholder="Admin Password"
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="last_name">Repeat Password:</label>
+      <input
+        type="text"
+        class="formInput"
+        name="repeat_admin_password"
+        id="repeat_admin_password"
+        placeholder="Repeat Password"
+      />
+    </div>
+    <button type="submit" class="formButton">Press To Submit</button>
+  </div>
+</form>
