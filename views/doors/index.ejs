@@ -1,8 +1,8 @@
 <!-- Header -->
-<%- include('partials/head') %>
+<%- include('../partials/head') %>
 
 <!-- Navbar -->
-<%- include('partials/navbar') %>
+<%- include('../partials/navbar') %>
 
 <!-- main page structure -->
 <div class="container text-center">
@@ -11,7 +11,10 @@
   </div>
   <div class="row">
     <!-- FORM -->
-    <%- include('partials/doors/doorForm') %>
+    <div class="col col-lg-3" id="tableSide-Div">
+      <%- include('doorForm') %>
+    </div>
+
     <!-- Table Select Buttons -->
     <div class="col col-lg-1">
       <div class="mid_button">
@@ -22,8 +25,10 @@
       </div>
     </div>
     <!-- TABLE -->
-    <%- include('partials/doors/doorTable') %>
+    <div class="col col-lg-8" id="tableSide-Div">
+      <%- include('doorTable') %>
+    </div>
   </div>
   <!-- footer -->
-  <%- include('partials/footer') %>
+  <%- include('../partials/footer') %>
 </div>

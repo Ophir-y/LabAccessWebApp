@@ -1,0 +1,29 @@
+<!-- Header -->
+<%- include('../partials/head') %>
+
+<!-- Navbar -->
+<%- include('../partials/navbar') %>
+
+<!-- main page structure -->
+<div class="container text-center">
+  <div class="row header">
+    <h1>Permissions</h1>
+  </div>
+  <div class="row">
+    <!-- FORM -->
+    <%- include('../Permissions/permissionForm') %>
+    <!-- Table Select Buttons -->
+
+    <!-- People TABLE -->
+
+    <div class="col col-lg-5" id="tableSide-Div">
+      <%- include('../people/peopleTable') %>
+    </div>
+    <!-- Door TABLE -->
+    <div class="col col-lg-5" id="tableSide-Div">
+      <%- include('../doors/doorTable') %>
+    </div>
+  </div>
+  <!-- footer -->
+  <%- include('../partials/footer') %>
+</div>

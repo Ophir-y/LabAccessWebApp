@@ -1,0 +1,39 @@
+
+
+  <!-- table divider -->
+  <table class="table" id="people_table">
+    <!-- <label for="people_table">People Table</label> -->
+    <thead>
+      <tr>
+        <th class="table_checkbox" scope="col"></th>
+        <!-- <input type="checkbox" name="select_row" id="select_row" /> -->
+        <th scope="col">ID</th>
+        <!-- number -->
+        <th scope="col">First Name</th>
+        <!-- string -->
+        <th scope="col">Second Name</th>
+        <!-- string -->
+        <th class="table_checkbox" scope="col">Admin</th>
+        <!-- check ( &#x2714; )or cross (&#x274C;) -->
+      </tr>
+    </thead>
+    <tbody id="container">
+      <% for(let p of people) {%>
+        <tr>
+          <td>
+            <input type="checkbox" name="check<%=p.person_id%>" id="check<%=p.person_id%>" />
+          </td>
+          <td><%=p.person_id %></td>
+          <td><%=p.first_name %></td>
+          <td><%=p.last_name %></td>
+          <td>
+            <% if (p.admin_system_access) { %>
+              &#x2714
+          <% } else { %>
+              &#x274C
+            <% } %>
+          </td>
+        </tr>
+        <%}%>
+    </tbody>
+  </table>

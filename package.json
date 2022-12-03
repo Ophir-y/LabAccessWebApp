@@ -3,7 +3,8 @@
     "axios": "^1.2.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "uuid": "^9.0.0"
   },
   "name": "labaccesswebapp",
   "description": "This Repo is for the Website we are building for the Lab Access project",
