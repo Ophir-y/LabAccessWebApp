@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // fake person list
-const people = [
+var people = [
   {
     person_id: 308397546,
     first_name: "Ophir",
@@ -21,11 +21,18 @@ const people = [
     admin_password: "admin123",
   },
   {
-    person_id: 2,
-    first_name: "Ben",
-    last_name: "Rote",
+    person_id: 123456788,
+    first_name: "ben",
+    last_name: "rote",
     admin_system_access: false,
-    admin_password: null,
+    admin_password: "",
+  },
+  {
+    person_id: 456789134,
+    first_name: "noam",
+    last_name: "Yoram",
+    admin_system_access: false,
+    admin_password: "",
   },
 ];
 
