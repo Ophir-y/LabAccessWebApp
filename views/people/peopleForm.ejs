@@ -1,19 +1,27 @@
 <!-- 1 of 2 -->
 <!-- form divider -->
 
-<form action="/people" method="post" id="formSide-Div">
+<form
+  onsubmit="return checkPassword(this)"
+  action="/people"
+  method="post"
+  id="formSide-Div"
+>
   <p class="formLable">Enter Person ID and Details</p>
   <div class="form">
+    <!-- ID -->
     <div class="row">
-      <label class="formLable" for="personID">ID:</label>
+      <label class="formLable" for="person_id">ID: [9 digit number]</label>
       <input
-        type="text"
         class="formInput"
-        name="personID"
-        id="personID"
+        name="person_id"
+        id="person_id"
         placeholder="ID"
+        required
+        pattern="[0-9]{9}"
       />
     </div>
+    <!-- First Name -->
     <div class="row">
       <label class="formLable" for="first_name">First Name:</label>
       <input
@@ -22,8 +30,10 @@
         name="first_name"
         id="first_name"
         placeholder="First Name"
+        required
       />
     </div>
+    <!-- Last name -->
     <div class="row">
       <label class="formLable" for="last_name">Last Name:</label>
       <input
@@ -32,32 +42,90 @@
         name="last_name"
         id="last_name"
         placeholder="Last Name"
+        required
       />
     </div>
+    <!-- Admin checkbox -->
     <div class="row">
       <label class="formLable" for="isAdmin">Admin?</label>
-      <input type="checkbox" class="formInput" name="isAdmin" id="isAdmin" />
-    </div>
-    <div class="row">
-      <label class="formLable" for="last_name">Admin Password:</label>
       <input
-        type="text"
+        type="checkbox"
+        id="isAdmin"
+        class="formInput"
+        name="isAdmin"
+        value="true"
+      />
+    </div>
+    <!-- input hidden to get unchecked value -->
+    <input type="hidden" name="isAdmin" value="false" />
+    <!-- Password -->
+    <div class="row adminPass">
+      <label class="formLable" for="admin_password">Admin Password:</label>
+      <input
+        type="password"
         class="formInput"
         name="admin_password"
         id="admin_password"
         placeholder="Admin Password"
+        minlength="6"
       />
     </div>
-    <div class="row">
-      <label class="formLable" for="last_name">Repeat Password:</label>
+    <!-- Confirm password -->
+    <div class="row adminPass">
+      <label class="formLable" for="confirm_admin_password"
+        >Confirm Password:</label
+      >
       <input
-        type="text"
+        type="password"
         class="formInput"
-        name="repeat_admin_password"
-        id="repeat_admin_password"
+        name="confirm_admin_password"
+        id="confirm_admin_password"
         placeholder="Repeat Password"
+        minlength="6"
       />
     </div>
+
     <button type="submit" class="formButton">Press To Submit</button>
   </div>
 </form>
+<script>
+  // checked logic:
+  const passrd = document.querySelectorAll(".adminPass");
+  const check = document.querySelector("#isAdmin");
+  // make passwords hidden
+  for (const elem of passrd) {
+    elem.style.visibility = "hidden";
+  }
+  // if admin is checked then unhide
+  check.addEventListener("change", () => {
+    if (check.checked) {
+      for (const elem of passrd) {
+        elem.style.visibility = "visible";
+      }
+    } else {
+      for (const elem of passrd) {
+        elem.style.visibility = "hidden";
+      }
+    }
+  });
+
+  function checkPassword(form) {
+    // get the password input value
+    const firstPass = form.admin_password.value;
+    const confPass = form.confirm_admin_password.value;
+    //if check is checked
+    if (form.isAdmin.checked) {
+      if (firstPass === "" || confPass === "") {
+        alert("Please fill both password fields!");
+        return false;
+      }
+      if (firstPass === confPass) {
+        return true;
+      } else {
+        alert("Password does not match!!");
+        return false;
+      }
+    }
+    return true;
+  }
+</script>

@@ -1,10 +1,10 @@
 <!-- 1 of 2 -->
 <!-- form divider -->
 
-<form action="/people" method="post" class="col col-lg-2" id="formSide-Div">
-  <p class="formLable">Enter permission ID and Details</p>
+<form action="/permissions" method="post" id="formSide-Div">
+  <p class="formLable">Enter permission Details</p>
   <div class="form">
-    <div class="row">
+    <!-- <div class="row">
       <label class="formLable" for="permissionID">ID:</label>
       <input
         type="text"
@@ -13,24 +13,22 @@
         id="permissionID"
         placeholder="ID"
       />
-    </div>
+    </div> -->
     <div class="row">
-      <label class="formLable" for="perType">Permission Type</label>
-      <input
-        list="permissionTypes"
-        class="formInput"
+      <label class="formLable" for="perType">Choose Type</label>
+      <select
         name="perType"
+        class="selectFormInput"
         id="perType"
         placeholder="Permission Type"
-      />
-      <datalist id="permissionTypes">
-        <option value="Door Access"></option>
-        <option value="Admin Privileges"></option>
-        <option value="Admin Add People"></option>
-        <option value="Admin Add Doors"></option>
-        <option value="Admin Add Permissions"></option>
-        <option value="Admin Add Admin"></option>
-      </datalist>
+      >
+        <option name="Door Access">Door Access</option>
+        <option name="Admin Privileges">Admin Privileges</option>
+        <option name="Admin Add People">Admin Add People</option>
+        <option name="Admin Add Doors">Admin Add Doors</option>
+        <option name="Admin Add Permissions">Admin Add Permissions</option>
+        <option name="Admin Add Admin">Admin Add Admin</option>
+      </select>
     </div>
     <div class="row">
       <label class="formLable" for="initialDate">Initial Date:</label>
@@ -81,9 +79,14 @@
   </div>
 
   <p class="formLable">
-    Date - defines the period of time that the permission is valid.
+    <b>Date</b> - defines the period of time that the permission is valid.
   </p>
   <p class="formLable">
-    Time - defines the daily period of time that the permission is valid.
+    <b>Time</b> - defines the daily period of time that the permission is valid.
+    <b
+      ><i
+        >(If time is empty the permission will be granted for the whole day)</i
+      ></b
+    >
   </p>
 </form>
