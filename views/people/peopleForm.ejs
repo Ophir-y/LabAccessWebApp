@@ -47,17 +47,16 @@
     </div>
     <!-- Admin checkbox -->
     <div class="row">
-      <label class="formLable" for="isAdmin">Admin?</label>
+      <!-- input hidden to get unchecked value -->
+      <label class="formLable" for="admin_system_access">Admin?</label>
       <input
         type="checkbox"
-        id="isAdmin"
+        id="admin_system_access"
         class="formInput"
-        name="isAdmin"
-        value="true"
+        name="admin_system_access"
       />
     </div>
-    <!-- input hidden to get unchecked value -->
-    <input type="hidden" name="isAdmin" value="false" />
+
     <!-- Password -->
     <div class="row adminPass">
       <label class="formLable" for="admin_password">Admin Password:</label>
@@ -91,7 +90,7 @@
 <script>
   // checked logic:
   const passrd = document.querySelectorAll(".adminPass");
-  const check = document.querySelector("#isAdmin");
+  const check = document.querySelector("#admin_system_access");
   // make passwords hidden
   for (const elem of passrd) {
     elem.style.visibility = "hidden";
@@ -114,7 +113,7 @@
     const firstPass = form.admin_password.value;
     const confPass = form.confirm_admin_password.value;
     //if check is checked
-    if (form.isAdmin.checked) {
+    if (form.admin_system_access.checked) {
       if (firstPass === "" || confPass === "") {
         alert("Please fill both password fields!");
         return false;

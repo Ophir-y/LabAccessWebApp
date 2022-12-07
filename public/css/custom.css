@@ -15,15 +15,31 @@ img {
   text-align: center;
   margin-top: 10%;
 }
+
+.mainContainer {
+  width: 100%;
+  padding-right: 2%;
+  padding-left: 2%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /*######################### table styles ###################### */
+.tableSearchInput {
+  background-image: url("/images/magnify.png");
+  background-position: 5px 10px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  width: 100%;
+  font-size: 16px;
+  padding: 6px 10px 6px 40px;
+  border: 1px solid #ddd;
+}
+
 #tableSide-Div {
-  /* background-color: #fed9ff; */
-  /* width: 30vw; */
   height: 100vh;
-  overflow-x: auto;
   overflow-y: auto;
   text-align: center;
-  /* padding: 20px; */
 }
 th {
   border: 1px solid rgb(190, 190, 190);

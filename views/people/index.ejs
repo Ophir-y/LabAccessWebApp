@@ -5,7 +5,7 @@
 <%- include('../partials/navbar') %>
 
 <!-- main page structure -->
-<div class="container text-center">
+<div class="text-center mainContainer">
   <div class="row header">
     <h1>People</h1>
   </div>
@@ -21,8 +21,23 @@
         <button type="button" class="btn btn-danger">Group</button>
       </div>
       <div class="mid_button">
-        <button type="button" class="btn btn-danger">DELETE!</button>
+        <form action="/people" method="get">
+          <button type="form" onclick="deletePerson()" class="btn btn-danger">
+            DELETE!
+          </button>
+        </form>
       </div>
+      <script>
+        function deletePerson() {
+          rows = document.querySelector("tbody").querySelectorAll("tr");
+          let i = 0;
+          for (const row of rows) {
+            if (row.querySelector("#check" + `${row.id}`).checked) {
+              fetch(`/people/${row.id}`, { method: "DELETE" });
+            }
+          }
+        }
+      </script>
     </div>
 
     <!-- TABLE -->

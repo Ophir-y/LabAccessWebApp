@@ -1,12 +1,20 @@
 const express = require("express");
+const app = express();
+
+var methodOverride = require("method-override");
+
+// set port number
+const port = 8080;
+
 // package for creating uniqu IDs
 const { v4: idGet } = require("uuid");
-const app = express();
-const port = 8080;
+const { formToJSON } = require("axios");
+
 const path = require("path");
 // set public directory
 app.use(express.static(path.join(__dirname, "/public")));
-
+// set method override
+app.use(methodOverride("_method"));
 // set views as the views directory.
 app.set("views", path.join(__dirname, "/views"));
 // set view engine to ejs.
@@ -18,31 +26,74 @@ app.use(express.json());
 
 // ##################################################################
 // fake person list
-var peoples = [
+// ##################################################################
+let peoples = [
   {
-    person_id: 308397546,
+    person_id: "308397546",
     first_name: "Ophir",
     last_name: "Yoram",
-    admin_system_access: true,
+    admin_system_access: "true",
     admin_password: "admin123",
   },
   {
-    person_id: 123456788,
+    person_id: "123456788",
     first_name: "ben",
     last_name: "rote",
-    admin_system_access: false,
+    admin_system_access: "false",
     admin_password: "",
   },
   {
-    person_id: 456789134,
+    person_id: "456789134",
     first_name: "noam",
     last_name: "Yoram",
-    admin_system_access: false,
+    admin_system_access: "true",
+    admin_password: "",
+  },
+  {
+    person_id: "308597546",
+    first_name: "Ophir",
+    last_name: "Yoram",
+    admin_system_access: "true",
+    admin_password: "admin123",
+  },
+  {
+    person_id: "125456788",
+    first_name: "ben",
+    last_name: "rote",
+    admin_system_access: "false",
+    admin_password: "",
+  },
+  {
+    person_id: "455789134",
+    first_name: "noam",
+    last_name: "Yoram",
+    admin_system_access: "true",
+    admin_password: "",
+  },
+  {
+    person_id: "306397546",
+    first_name: "Ophir",
+    last_name: "Yoram",
+    admin_system_access: "true",
+    admin_password: "admin123",
+  },
+  {
+    person_id: "126456788",
+    first_name: "ben",
+    last_name: "rote",
+    admin_system_access: "false",
+    admin_password: "",
+  },
+  {
+    person_id: "457789134",
+    first_name: "noam",
+    last_name: "Yoram",
+    admin_system_access: "true",
     admin_password: "",
   },
 ];
 
-const doorss = [
+let doorss = [
   {
     door_id: idGet(),
     door_name: "lab1 door",
@@ -57,7 +108,7 @@ const doorss = [
   },
 ];
 
-const permissionss = [
+let permissionss = [
   {
     permissions_id: idGet(),
     permission_type: "Door Access",
@@ -85,8 +136,8 @@ const permissionss = [
 ];
 // ##################################################################
 // routs:
-
 // routs to different pages on website:
+// ##################################################################
 app.get("/", (req, res) => {
   res.render("home");
 });
@@ -94,13 +145,14 @@ app.get("/", (req, res) => {
 // ##################################################################
 // routs for 'people' page.
 // includes get and post for page and form logic
+// ##################################################################
 app.get("/people", (req, res) => {
   res.render("people", { doorss, peoples });
 });
 
 app.post("/people", (req, res) => {
   console.log(req.body);
-  const {
+  let {
     person_id,
     first_name,
     last_name,
@@ -108,7 +160,12 @@ app.post("/people", (req, res) => {
     admin_password,
     admin_password_confirm,
   } = req.body;
-  peoples.push({
+  if (admin_system_access == "on") {
+    admin_system_access = "true";
+  } else {
+    admin_system_access = "false";
+  }
+  let = peoples.push({
     person_id,
     first_name,
     last_name,
@@ -118,9 +175,15 @@ app.post("/people", (req, res) => {
   res.render("people", { doorss, peoples });
 });
 
+app.delete("/people/:person_id", (req, res) => {
+  const { person_id } = req.params;
+  peoples = peoples.filter((p) => p.person_id !== person_id);
+});
+
 // ##################################################################
 // routs for 'groups' page.
 // includes get and post for page and form logic
+// ##################################################################
 app.get("/groups", (req, res) => {
   res.render("groups", { doorss, peoples });
 });
@@ -128,6 +191,7 @@ app.get("/groups", (req, res) => {
 // ##################################################################
 // routs for 'groups permissions' page.
 // includes get and post for page and form logic
+// ##################################################################
 app.get("/groupsPermissions", (req, res) => {
   res.render("groupsPermissions", { doorss, peoples });
 });
@@ -135,11 +199,14 @@ app.get("/groupsPermissions", (req, res) => {
 // ##################################################################
 // routs for 'doors' page.
 // includes get and post for page and form logic
+// ##################################################################
 app.get("/doors", (req, res) => {
   res.render("doors", { doorss, peoples });
 });
 
+// ##################################################################
 // doors post request
+// ##################################################################
 app.post("/doors", (req, res) => {
   console.log(req.body);
   const { door_name, building_name, floor_number } = req.body;
@@ -147,13 +214,21 @@ app.post("/doors", (req, res) => {
   res.render("doors", { doorss, peoples });
 });
 
+app.delete("/doors/:door_id", (req, res) => {
+  const { door_id } = req.params;
+  doorss = doorss.filter((d) => d.door_id !== door_id);
+});
 // ##################################################################
 // routs for 'permissions' page.
 // includes get and post for page and form logic
+// ##################################################################
 app.get("/permissions", (req, res) => {
   res.render("permissions", { doorss, peoples, permissionss });
 });
+
+// ##################################################################
 // permissions post
+// ##################################################################
 app.post("/permissions", (req, res) => {
   console.log(req.body);
   const { permission_type, initial_date, expiry_date, start_time, end_time } =
@@ -171,17 +246,21 @@ app.post("/permissions", (req, res) => {
 
 // ##################################################################
 //pokemon!
+// ##################################################################
 app.get("/poke", (req, res) => {
   res.render("poke");
 });
 
+// ##################################################################
 // reply to any other path
+// ##################################################################
 app.get("*", (req, res) => {
   res.send("not a valid path");
 });
 
 // ##################################################################
 // listen logic
+// ##################################################################
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

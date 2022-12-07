@@ -18,12 +18,13 @@
   </thead>
   <tbody id="container">
     <% for(let d of doorss) {%>
-    <tr>
+    <tr onclick="selectRow(this)" id="<%=d.door_id%>">
       <td>
         <input
           type="checkbox"
           name="check<%=d.door_id%>"
           id="check<%=d.door_id%>"
+          style="pointer-events: none"
         />
       </td>
       <td><%=d.door_id %></td>
@@ -32,5 +33,11 @@
       <td><%=d.floor_number %></td>
     </tr>
     <%}%>
+    <script type="text/javascript">
+      function selectRow(row) {
+        const rowInput = row.getElementsByTagName("input")[0];
+        rowInput.checked = !rowInput.checked;
+      }
+    </script>
   </tbody>
 </table>
