@@ -1,3 +1,5 @@
+/** @format */
+
 const express = require("express");
 const app = express();
 
@@ -5,6 +7,16 @@ var methodOverride = require("method-override");
 
 // set port number
 const port = 8080;
+// ##################################################################
+// connect to database
+// ##################################################################
+const mysql = require("mysql2");
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "LaB20@AcC22%sYs12",
+  database: "labaccessdb",
+});
 
 // package for creating uniqu IDs
 const { v4: idGet } = require("uuid");
@@ -23,7 +35,6 @@ app.set("view engine", "ejs");
 // set types of usasble requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 // ##################################################################
 // fake person list
 // ##################################################################
@@ -32,63 +43,63 @@ let peoples = [
     person_id: "308397546",
     first_name: "Ophir",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 1,
     admin_password: "admin123",
   },
   {
     person_id: "123456788",
     first_name: "ben",
     last_name: "rote",
-    admin_system_access: "false",
+    admin_system_access: 0,
     admin_password: "",
   },
   {
     person_id: "456789134",
     first_name: "noam",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 1,
     admin_password: "",
   },
   {
     person_id: "308597546",
     first_name: "Ophir",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 1,
     admin_password: "admin123",
   },
   {
     person_id: "125456788",
     first_name: "ben",
     last_name: "rote",
-    admin_system_access: "false",
+    admin_system_access: 0,
     admin_password: "",
   },
   {
     person_id: "455789134",
     first_name: "noam",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 0,
     admin_password: "",
   },
   {
     person_id: "306397546",
     first_name: "Ophir",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 1,
     admin_password: "admin123",
   },
   {
     person_id: "126456788",
     first_name: "ben",
     last_name: "rote",
-    admin_system_access: "false",
+    admin_system_access: 0,
     admin_password: "",
   },
   {
     person_id: "457789134",
     first_name: "noam",
     last_name: "Yoram",
-    admin_system_access: "true",
+    admin_system_access: 0,
     admin_password: "",
   },
 ];

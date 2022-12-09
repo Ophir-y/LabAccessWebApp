@@ -1,0 +1,18 @@
+MySQL username: root
+MySQL Password: LaB20@AcC22%sYs12
+
+command list:
+
+
+
+
+
+
+//To drop a database: (delete)
+
+DROP DATABASE <database-name>;
+
+//To use a database:
+
+USE <database-name>;
+s
