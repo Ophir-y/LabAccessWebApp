@@ -8,7 +8,7 @@ function selectRow(row) {
 let adminFlag = 1;
 // function to toggle between admins/ non admins/ all.
 function adminSelectToggle() {
-  let input, filter, table, trs, td, txtValue;
+  let table, trs;
   table = document.querySelector("#people_table");
   trs = table.getElementsByTagName("tr");
   for (const tr of trs) {
@@ -60,7 +60,11 @@ function tableSearchFunction(name) {
       txtValue = td.textContent;
       // if we are an ID column and the search input is not a number check if we have that input
       // or: if we are searching names check if the name exists in the rows below
-      if ((name === "id") & !isNaN(filter) || name === "name") {
+      if (
+        (name === "id") & !isNaN(filter) ||
+        name === "first_name" ||
+        name === "last_name"
+      ) {
         // get only the rows where the input matches the row string values.
         // compare only the charecters which are within the filters string length.
         if (txtValue.toUpperCase().slice(0, filter.length) == filter) {

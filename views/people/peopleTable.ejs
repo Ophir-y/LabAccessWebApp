@@ -22,9 +22,19 @@
         <input
           type="text"
           class="tableSearchInput"
-          id="name"
+          id="first_name"
           onkeyup="tableSearchFunction(this.id)"
-          placeholder="Name"
+          placeholder="First Name"
+        />
+      </th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="last_name"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Last Name"
         />
       </th>
       <!-- string -->
@@ -52,7 +62,8 @@
         />
       </td>
       <td class="id"><%=p.person_id %></td>
-      <td class="name"><%=p.first_name %> <%=p.last_name %></td>
+      <td class="first_name"><%=p.first_name %></td>
+      <td class="last_name"><%=p.last_name %></td>
       <td class="<%=p.admin_system_access%>">
         <% if (p.admin_system_access) { %> &#10004; <% } else { %> &#10060; <% }
         %>

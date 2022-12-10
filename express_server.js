@@ -20,7 +20,6 @@ const pool = mysql.createPool({
 
 // package for creating uniqu IDs
 const { v4: idGet } = require("uuid");
-const { formToJSON } = require("axios");
 
 const path = require("path");
 // set public directory
@@ -35,116 +34,43 @@ app.set("view engine", "ejs");
 // set types of usasble requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// ##################################################################
-// fake person list
-// ##################################################################
-let peoples = [
-  {
-    person_id: "308397546",
-    first_name: "Ophir",
-    last_name: "Yoram",
-    admin_system_access: 1,
-    admin_password: "admin123",
-  },
-  {
-    person_id: "123456788",
-    first_name: "ben",
-    last_name: "rote",
-    admin_system_access: 0,
-    admin_password: "",
-  },
-  {
-    person_id: "456789134",
-    first_name: "noam",
-    last_name: "Yoram",
-    admin_system_access: 1,
-    admin_password: "",
-  },
-  {
-    person_id: "308597546",
-    first_name: "Ophir",
-    last_name: "Yoram",
-    admin_system_access: 1,
-    admin_password: "admin123",
-  },
-  {
-    person_id: "125456788",
-    first_name: "ben",
-    last_name: "rote",
-    admin_system_access: 0,
-    admin_password: "",
-  },
-  {
-    person_id: "455789134",
-    first_name: "noam",
-    last_name: "Yoram",
-    admin_system_access: 0,
-    admin_password: "",
-  },
-  {
-    person_id: "306397546",
-    first_name: "Ophir",
-    last_name: "Yoram",
-    admin_system_access: 1,
-    admin_password: "admin123",
-  },
-  {
-    person_id: "126456788",
-    first_name: "ben",
-    last_name: "rote",
-    admin_system_access: 0,
-    admin_password: "",
-  },
-  {
-    person_id: "457789134",
-    first_name: "noam",
-    last_name: "Yoram",
-    admin_system_access: 0,
-    admin_password: "",
-  },
-];
 
-let doorss = [
-  {
-    door_id: idGet(),
-    door_name: "lab1 door",
-    building_name: "ulman",
-    floor_number: 1,
-  },
-  {
-    door_id: idGet(),
-    door_name: "lab2 door",
-    building_name: "ulman",
-    floor_number: 2,
-  },
-];
+// ##################################################################
+// get person list
+// ##################################################################
+let peoples;
+const getPeople = async () => {
+  const personget = "SELECT * FROM people";
+  pool.query(personget, (err, results) => {
+    if (err) throw err;
+    peoples = results;
+  });
+};
 
-let permissionss = [
-  {
-    permissions_id: idGet(),
-    permission_type: "Door Access",
-    initial_date: "12/12/2022",
-    expiry_date: "12/12/2022",
-    start_time: "12:00",
-    end_time: "11:00",
-  },
-  {
-    permissions_id: idGet(),
-    permission_type: "Door Access",
-    initial_date: "12/12/2022",
-    expiry_date: "12/12/2022",
-    start_time: "12:00",
-    end_time: "11:00",
-  },
-  {
-    permissions_id: idGet(),
-    permission_type: "Door Access",
-    initial_date: "12/12/2022",
-    expiry_date: "12/12/2022",
-    start_time: "12:00",
-    end_time: "11:00",
-  },
-];
+// ##################################################################
+// get doors list
+// ##################################################################
+let doorss;
+const getDoors = async () => {
+  const doorget = "SELECT * FROM doors";
+  pool.query(doorget, (err, results) => {
+    if (err) throw err;
+    doorss = results;
+  });
+};
+
+// ##################################################################
+// get permission list
+// ##################################################################
+let permissionss;
+const getPermissions = async () => {
+  const permissionget = "SELECT * FROM permissions";
+  pool.query(permissionget, (err, results) => {
+    if (err) throw err;
+    const permissionss = results;
+  });
+};
+
 // ##################################################################
 // routs:
 // routs to different pages on website:
@@ -158,32 +84,54 @@ app.get("/", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/people", (req, res) => {
-  res.render("people", { doorss, peoples });
+  getPeople()
+    .then(getDoors())
+    .then(res.render("people", { doorss, peoples }))
+    .catch(console.log("Cant get people from server!"));
 });
 
 app.post("/people", (req, res) => {
-  console.log(req.body);
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+  }
+  // save req information from client
   let {
     person_id,
     first_name,
     last_name,
-    admin_system_access,
+    admin_system_access, // admin field 1 if admin, 0 if not.
     admin_password,
     admin_password_confirm,
   } = req.body;
+
+  // check if the client sent a request to add an Admin or not
   if (admin_system_access == "on") {
-    admin_system_access = "true";
+    console.log("here");
+    admin_system_access = 1;
   } else {
-    admin_system_access = "false";
+    admin_system_access = 0;
   }
-  let = peoples.push({
-    person_id,
-    first_name,
-    last_name,
-    admin_system_access,
-    admin_password,
-  });
-  res.render("people", { doorss, peoples });
+  //create add person sql queiry command
+  const addPerson = `INSERT INTO people() VALUES(${person_id},"${first_name}","${last_name}",${admin_system_access},"${admin_password}")`;
+  // create try/catch for query
+  try {
+    // return
+    pool.query(addPerson, (err, results) => {
+      if (err) {
+        res.send("already a person with that ID ");
+        // alert("already a person with that ID ");
+      } else {
+        console.log(
+          `added ${person_id},${first_name},${last_name},${admin_system_access},'${admin_password}'`
+        );
+      }
+    });
+  } catch (err) {
+    console.log("error!!!!");
+  }
+  getPeople()
+    .then(res.redirect("/people"))
+    .catch(console.log("Cant get people from server!"));
 });
 
 app.delete("/people/:person_id", (req, res) => {
@@ -212,7 +160,10 @@ app.get("/groupsPermissions", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/doors", (req, res) => {
-  res.render("doors", { doorss, peoples });
+  getDoors()
+    .then(getPeople())
+    .then(res.render("doors", { doorss, peoples }))
+    .catch(console.log("Cant get doors from server!"));
 });
 
 // ##################################################################
@@ -234,7 +185,11 @@ app.delete("/doors/:door_id", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/permissions", (req, res) => {
-  res.render("permissions", { doorss, peoples, permissionss });
+  getPermissions()
+    .then(getDoors())
+    .then(getPeople())
+    .then(res.render("permissions", { doorss, peoples, permissions }))
+    .catch(console.log("Cant get permissions from server!"));
 });
 
 // ##################################################################

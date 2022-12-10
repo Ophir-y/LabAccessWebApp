@@ -1,8 +1,10 @@
+<!-- @format -->
+
 <!-- 1 of 2 -->
 <!-- form divider -->
 
 <form
-  onsubmit="return checkPassword(this)"
+  onsubmit="return checkIdandPassword(this)"
   action="/people"
   method="post"
   id="formSide-Div"
@@ -87,44 +89,4 @@
     <button type="submit" class="formButton">Press To Submit</button>
   </div>
 </form>
-<script>
-  // checked logic:
-  const passrd = document.querySelectorAll(".adminPass");
-  const check = document.querySelector("#admin_system_access");
-  // make passwords hidden
-  for (const elem of passrd) {
-    elem.style.visibility = "hidden";
-  }
-  // if admin is checked then unhide
-  check.addEventListener("change", () => {
-    if (check.checked) {
-      for (const elem of passrd) {
-        elem.style.visibility = "visible";
-      }
-    } else {
-      for (const elem of passrd) {
-        elem.style.visibility = "hidden";
-      }
-    }
-  });
-
-  function checkPassword(form) {
-    // get the password input value
-    const firstPass = form.admin_password.value;
-    const confPass = form.confirm_admin_password.value;
-    //if check is checked
-    if (form.admin_system_access.checked) {
-      if (firstPass === "" || confPass === "") {
-        alert("Please fill both password fields!");
-        return false;
-      }
-      if (firstPass === confPass) {
-        return true;
-      } else {
-        alert("Password does not match!!");
-        return false;
-      }
-    }
-    return true;
-  }
-</script>
+<script src="js/peopleFormLogic.js"></script>
