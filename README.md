@@ -10,6 +10,6 @@ requierments:
     https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
 * mySQL
-  *Installation guide: 
+  * Installation guide: 
    https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
 
