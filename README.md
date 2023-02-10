@@ -12,4 +12,6 @@ requierments:
 * mySQL
   * Installation guide: 
    https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+   * for windows:
+     https://dev.mysql.com/downloads/windows/installer/8.0.html
 
