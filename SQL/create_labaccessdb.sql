@@ -1,3 +1,12 @@
+-- create database
+CREATE DATABASE labaccessdb;
+
+-- use database
+USE labaccessdb;
+
+
+-- to delete use following command: 
+-- DROP database labaccessdb;
 
 -- People table #########################################################################
 CREATE TABLE `People`(

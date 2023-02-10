@@ -45,7 +45,8 @@
     </tr>
   </thead>
   <tbody id="container">
-    <% for(let p of peoples) {%>
+    <% if (peoples) {%>
+    <% peoples.forEach(function(p){%>
     <tr
       onclick="selectRow(this)"
       id="<%=p.person_id%>"
@@ -69,6 +70,7 @@
         %>
       </td>
     </tr>
+    <%});%>
     <%}%>
     <script src="js/peopleTableLogic.js"></script>
   </tbody>

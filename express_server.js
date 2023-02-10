@@ -38,7 +38,9 @@ app.use(express.json());
 // ##################################################################
 // get person list
 // ##################################################################
+
 let peoples;
+
 const getPeople = async () => {
   const personget = "SELECT * FROM people";
   pool.query(personget, (err, results) => {
@@ -46,6 +48,10 @@ const getPeople = async () => {
     peoples = results;
   });
 };
+getPeople().catch((error) => {
+  console.log("Cant get people from server!");
+});
+
 
 // ##################################################################
 // get doors list
@@ -58,6 +64,9 @@ const getDoors = async () => {
     doorss = results;
   });
 };
+getDoors().catch((error) => {
+  console.log("Cant get Doors from server!");
+});
 
 // ##################################################################
 // get permission list
@@ -79,15 +88,20 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+
+
 // ##################################################################
 // routs for 'people' page.
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/people", (req, res) => {
   getPeople()
-    .then(getDoors())
-    .then(res.render("people", { doorss, peoples }))
-    .catch(console.log("Cant get people from server!"));
+    .then(res.render("people", {peoples: peoples}))
+    .catch((error) => {
+      console.log(error);
+      console.log("Cant get people from server!");
+    }
+      );
 });
 
 app.post("/people", (req, res) => {
@@ -161,11 +175,13 @@ app.get("/groupsPermissions", (req, res) => {
 // ##################################################################
 app.get("/doors", (req, res) => {
   getDoors()
-    .then(getPeople())
-    .then(res.render("doors", { doorss, peoples }))
-    .catch(console.log("Cant get doors from server!"));
+    .then(res.render("doors", {doorss: doorss}))
+    .catch((error) => {
+      console.log(error);
+      console.log("Cant get Doors from server!");
+    }
+      );
 });
-
 // ##################################################################
 // doors post request
 // ##################################################################

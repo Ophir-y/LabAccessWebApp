@@ -1,6 +1,8 @@
-<!-- 2 of 2 -->
+
+
+
 <!-- table divider -->
-<table class="table" id="people_table">
+<table class="table" id="door_table">
   <!-- <label for="people_table">People Table</label> -->
   <thead>
     <tr>
@@ -8,16 +10,41 @@
       <!-- <input type="checkbox" name="select_row" id="select_row" /> -->
       <th scope="col">ID</th>
       <!-- number -->
-      <th scope="col">Door Name</th>
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="door_name_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Door Name"
+        />
+      </th>
       <!-- string -->
-      <th scope="col">Building Name</th>
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="building_name_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Building Name"
+        />
+      </th>
       <!-- string -->
-      <th scope="col">floor</th>
+      <th scope="col">
+        <input
+          type="number"
+          class="tableSearchInput"
+          id="floor_number_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Floor"
+        />
+      </th>
       <!-- number -->
     </tr>
   </thead>
   <tbody id="container">
-    <% for(let d of doorss) {%>
+    <% if (doorss) {%>
+      <% doorss.forEach(function(d){%>
     <tr onclick="selectRow(this)" id="<%=d.door_id%>">
       <td>
         <input
@@ -28,16 +55,12 @@
         />
       </td>
       <td><%=d.door_id %></td>
-      <td><%=d.door_name %></td>
-      <td><%=d.building_name %></td>
-      <td><%=d.floor_number %></td>
+      <td class="door_name_search"><%=d.door_name %></td>
+      <td class="building_name_search"><%=d.building_name %></td>
+      <td class="floor_number_search"><%=d.floor_number %></td>
     </tr>
+    <%});%>
     <%}%>
-    <script type="text/javascript">
-      function selectRow(row) {
-        const rowInput = row.getElementsByTagName("input")[0];
-        rowInput.checked = !rowInput.checked;
-      }
-    </script>
+    <script type="text/javascript" src="js/doorTableLogic.js"></script>
   </tbody>
 </table>
