@@ -52,7 +52,6 @@ getPeople().catch((error) => {
   console.log("Cant get people from server!");
 });
 
-
 // ##################################################################
 // get doors list
 // ##################################################################
@@ -88,20 +87,17 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-
-
 // ##################################################################
 // routs for 'people' page.
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/people", (req, res) => {
   getPeople()
-    .then(res.render("people", {peoples: peoples}))
+    .then(res.render("people", { peoples: peoples }))
     .catch((error) => {
       console.log(error);
       console.log("Cant get people from server!");
-    }
-      );
+    });
 });
 
 app.post("/people", (req, res) => {
@@ -175,12 +171,11 @@ app.get("/groupsPermissions", (req, res) => {
 // ##################################################################
 app.get("/doors", (req, res) => {
   getDoors()
-    .then(res.render("doors", {doorss: doorss}))
+    .then(res.render("doors", { doorss: doorss }))
     .catch((error) => {
       console.log(error);
       console.log("Cant get Doors from server!");
-    }
-      );
+    });
 });
 // ##################################################################
 // doors post request
@@ -238,6 +233,14 @@ app.get("/poke", (req, res) => {
 // ##################################################################
 app.get("*", (req, res) => {
   res.send("not a valid path");
+});
+
+// ##################################################################
+// esp GET request first try
+// ##################################################################
+app.get("/SayHi", (req, res) => {
+  console.log("got esp32 request");
+  res.send("Hi esp this is WEB APP SERVER");
 });
 
 // ##################################################################
