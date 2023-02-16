@@ -41,16 +41,16 @@ app.use(express.json());
 
 let peoples;
 
-const getPeople = async () => {
-  const personget = "SELECT * FROM people";
-  pool.query(personget, (err, results) => {
-    if (err) throw err;
-    peoples = results;
-  });
-};
-getPeople().catch((error) => {
-  console.log("Cant get people from server!");
-});
+// const getPeople = async () => {
+//   const personget = "SELECT * FROM people";
+//   pool.query(personget, (err, results) => {
+//     if (err) throw err;
+//     peoples = results;
+//   });
+// };
+// getPeople().catch((error) => {
+//   console.log("Cant get people from server!");
+// });
 
 // ##################################################################
 // get doors list
@@ -92,37 +92,28 @@ app.get("/", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/people", (req, res) => {
-  getPeople()
-    .then(res.render("people", { peoples: peoples }))
-    .catch((error) => {
-      console.log(error);
-      console.log("Cant get people from server!");
+  try {
+    pool.query("SELECT * FROM people", (err, results) => {
+      if (err) throw err;
+      res.render("people", { peoples: results });
     });
+  } catch (error) {
+    console.log("error!!!!");
+  }
 });
 
 app.post("/people", (req, res) => {
   if (!req.body) {
     res.send("ERROR: no body was sent!");
   }
-  // save req information from client
-  let {
-    person_id,
-    first_name,
-    last_name,
-    admin_system_access, // admin field 1 if admin, 0 if not.
-    admin_password,
-    admin_password_confirm,
-  } = req.body;
-
   // check if the client sent a request to add an Admin or not
-  if (admin_system_access == "on") {
-    console.log("here");
-    admin_system_access = 1;
+  if (req.body.admin_system_access == "on") {
+    req.body.admin_system_access = 1;
   } else {
-    admin_system_access = 0;
+    req.body.admin_system_access = 0;
   }
   //create add person sql queiry command
-  const addPerson = `INSERT INTO people() VALUES(${person_id},"${first_name}","${last_name}",${admin_system_access},"${admin_password}")`;
+  const addPerson = `INSERT INTO people() VALUES(${req.body.person_id},"${req.body.first_name}","${req.body.last_name}",${req.body.admin_system_access},"${req.body.admin_password}")`;
   // create try/catch for query
   try {
     // return
@@ -132,22 +123,37 @@ app.post("/people", (req, res) => {
         // alert("already a person with that ID ");
       } else {
         console.log(
-          `added ${person_id},${first_name},${last_name},${admin_system_access},'${admin_password}'`
+          `added ${req.body.person_id},"${req.body.first_name}","${req.body.last_name}",${req.body.admin_system_access},"${req.body.admin_password}"`
         );
+        try {
+          pool.query("SELECT * FROM people", (err, results) => {
+            if (err) throw err;
+            res.render("people", { peoples: results });
+          });
+        } catch (error) {
+          console.log("error!!!!");
+        }
       }
     });
   } catch (err) {
     console.log("error!!!!");
   }
-  getPeople()
-    .then(res.redirect("/people"))
-    .catch(console.log("Cant get people from server!"));
 });
 
-app.delete("/people/:person_id", (req, res) => {
-  const { person_id } = req.params;
-  peoples = peoples.filter((p) => p.person_id !== person_id);
+app.post("/people/delete", (req, res) => {
+  const ids = req.body.person_id.join(",");
+  connection.query(
+    `DELETE FROM people WHERE id IN (${idperson_ids})`,
+    (error, results, fields) => {
+      if (error) throw error;
+      res.redirect("/people");
+    }
+  );
 });
+// app.delete("/people/:person_id", (req, res) => {
+//   const { person_id } = req.params;
+//   peoples = peoples.filter((p) => p.person_id !== person_id);
+// });
 
 // ##################################################################
 // routs for 'groups' page.
