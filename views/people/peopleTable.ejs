@@ -45,8 +45,7 @@
     </tr>
   </thead>
   <tbody id="container">
-    <% if (peoples) {%>
-    <% peoples.forEach(function(p){%>
+    <% if (peoples) {%> <% peoples.forEach(function(p){%>
     <tr
       onclick="selectRow(this)"
       id="<%=p.person_id%>"
@@ -59,6 +58,7 @@
           type="checkbox"
           style="pointer-events: none"
           name="check<%=p.person_id%>"
+          value="<%=p.person_id%>"
           id="check<%=p.person_id%>"
         />
       </td>
@@ -70,8 +70,7 @@
         %>
       </td>
     </tr>
-    <%});%>
-    <%}%>
+    <%});%> <%}%>
     <script src="js/peopleTableLogic.js"></script>
   </tbody>
 </table>

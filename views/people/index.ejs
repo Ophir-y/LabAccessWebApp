@@ -23,20 +23,44 @@
         <button type="button" class="btn btn-danger">Group</button>
       </div>
       <div class="mid_button">
-        <form action="/people" method="get">
-          <button type="form" onclick="deletePerson()" class="btn btn-danger">
+        <form action="/people" method="GET">
+          <button
+            type="form"
+            onclick="deletePerson()"
+            class="btn btn-danger"
+            id="delete-button"
+          >
             DELETE!
           </button>
         </form>
       </div>
       <script>
+        const deleteButton = document.querySelector("#delete-button");
+        deleteButton.addEventListener("click", (event) => {
+          const confirmed = confirm(
+            "Are you sure you want to delete the selected people?"
+          );
+          if (!confirmed) {
+            event.preventDefault();
+          }
+        });
+
         function deletePerson() {
           rows = document.querySelector("tbody").querySelectorAll("tr");
           let i = 0;
+          const id_list = [];
           for (const row of rows) {
             if (row.querySelector("#check" + `${row.id}`).checked) {
-              fetch(`/people/${row.id}`, { method: "DELETE" });
+              id_list.push(row.id);
             }
+          }
+          console.log(id_list.length);
+          if (id_list.length >= 1) {
+            fetch(`/people/delete`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(id_list),
+            });
           }
         }
       </script>

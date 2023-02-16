@@ -141,19 +141,32 @@ app.post("/people", (req, res) => {
 });
 
 app.post("/people/delete", (req, res) => {
-  const ids = req.body.person_id.join(",");
-  connection.query(
-    `DELETE FROM people WHERE id IN (${idperson_ids})`,
-    (error, results, fields) => {
-      if (error) throw error;
-      res.redirect("/people");
+  try {
+    const person_ids = req.body;
+    if (person_ids.data == "") {
+      res.send("No one selected");
     }
-  );
+    pool.query(
+      `DELETE FROM people WHERE person_id IN (${person_ids})`,
+      (error) => {
+        if (error) {
+          throw error;
+        }
+
+        try {
+          pool.query("SELECT * FROM people", (err, results) => {
+            if (err) {
+              throw err;
+            }
+            res.redirect(307, "people");
+          });
+        } catch (error) {
+          console.log("error!!!!");
+        }
+      }
+    );
+  } catch (error) {}
 });
-// app.delete("/people/:person_id", (req, res) => {
-//   const { person_id } = req.params;
-//   peoples = peoples.filter((p) => p.person_id !== person_id);
-// });
 
 // ##################################################################
 // routs for 'groups' page.
@@ -227,12 +240,6 @@ app.post("/permissions", (req, res) => {
   res.render("permissions", { doorss, peoples, permissionss });
 });
 
-// ##################################################################
-//pokemon!
-// ##################################################################
-app.get("/poke", (req, res) => {
-  res.render("poke");
-});
 // ##################################################################
 // esp GET request first try
 // ##################################################################
