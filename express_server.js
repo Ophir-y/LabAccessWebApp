@@ -6,11 +6,11 @@ const app = express();
 var methodOverride = require("method-override");
 
 // set port number
-const port = 8080;
+const port = 1231;
 // ##################################################################
 // connect to database
 // ##################################################################
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -240,7 +240,7 @@ app.get("/Client", (req, res) => {
   const query = "SELECT person_id, first_name, last_name FROM people";
 
   // Execute the query using the connection pool
-  pool.query(query, (error, results, fields) => {
+  pool.query(query, (error, results) => {
     if (error) {
       console.error(error);
       res.status(500).send("Internal Server Error");
