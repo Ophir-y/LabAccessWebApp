@@ -243,14 +243,14 @@ app.post("/permissions", (req, res) => {
 // ##################################################################
 // esp GET request first try
 // ##################################################################
-app.get("/Client", (req, res) => {
+app.get("/GETLIST", (req, res) => {
   // Retrieve the custom ID header
   const id = req.get("X-Custom-ID");
   // Print the ID to the console
   console.log(`Request received from ID ${id}`);
 
   // Retrieve only the id, firstname, and lastname fields
-  const query = "SELECT person_id, first_name, last_name FROM people";
+  const query = "SELECT person_id FROM people";
 
   // Execute the query using the connection pool
   pool.query(query, (error, results) => {
@@ -263,6 +263,16 @@ app.get("/Client", (req, res) => {
     res.json(results);
   });
 });
+// ##################################################################
+// esp GET request first try
+// ##################################################################
+app.post("/ESP32POSTLOG", (req, res) => {
+  // Retrieve the custom ID header
+  const id = req.get("X-Custom-ID");
+  // Print the ID to the console
+  console.log(`Request received from ID ${id}`);
+});
+
 // ##################################################################
 // reply to any other path
 // ##################################################################
