@@ -237,7 +237,7 @@ app.get("/Client", (req, res) => {
   console.log(`Request received from ID ${id}`);
 
   // Retrieve only the id, firstname, and lastname fields
-  const query = "SELECT id, firstname, lastname FROM people";
+  const query = "SELECT person_id, first_name, last_name FROM people";
 
   // Execute the query using the connection pool
   pool.query(query, (error, results, fields) => {
@@ -246,7 +246,6 @@ app.get("/Client", (req, res) => {
       res.status(500).send("Internal Server Error");
       return;
     }
-
     // Send the results to the ESP32 board as a JSON array
     res.json(results);
   });
