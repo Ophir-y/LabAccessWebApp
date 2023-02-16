@@ -10,7 +10,7 @@ const port = 8080;
 // ##################################################################
 // connect to database
 // ##################################################################
-const mysql = require("mysql2");
+const mysql = require("mysql");
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -227,22 +227,36 @@ app.post("/permissions", (req, res) => {
 app.get("/poke", (req, res) => {
   res.render("poke");
 });
+// ##################################################################
+// esp GET request first try
+// ##################################################################
+app.get("/Client", (req, res) => {
+  // Retrieve the custom ID header
+  const id = req.get("X-Custom-ID");
+  // Print the ID to the console
+  console.log(`Request received from ID ${id}`);
 
+  // Retrieve only the id, firstname, and lastname fields
+  const query = "SELECT id, firstname, lastname FROM people";
+
+  // Execute the query using the connection pool
+  pool.query(query, (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Send the results to the ESP32 board as a JSON array
+    res.json(results);
+  });
+});
 // ##################################################################
 // reply to any other path
 // ##################################################################
 app.get("*", (req, res) => {
   res.send("not a valid path");
 });
-
-// ##################################################################
-// esp GET request first try
-// ##################################################################
-app.get("/SayHi", (req, res) => {
-  console.log("got esp32 request");
-  res.send("Hi esp this is WEB APP SERVER");
-});
-
 // ##################################################################
 // listen logic
 // ##################################################################
