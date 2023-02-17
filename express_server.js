@@ -272,7 +272,7 @@ app.post("/ESP32POSTLOG", (req, res) => {
   // Print the ID to the console
   console.log(`Request received from ID ${id}`);
 });
-
+//
 // ##################################################################
 // reply to any other path
 // ##################################################################
