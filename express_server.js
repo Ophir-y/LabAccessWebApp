@@ -169,6 +169,88 @@ app.post("/people/delete", (req, res) => {
 });
 
 // ##################################################################
+// routs for 'doors' page.
+// includes get and post for page and form logic
+// ##################################################################
+app.get("/doors", (req, res) => {
+  try {
+    pool.query("SELECT * FROM doors", (err, results) => {
+      if (err) throw err;
+      res.render("doors", { doorss: results });
+    });
+  } catch (error) {
+    console.log("error!!!!");
+  }
+});
+// ##################################################################
+// doors post request
+// ##################################################################
+app.post("/doors", (req, res) => {
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+  }
+  //create add door sql queiry command
+  const addDoor = `INSERT INTO doors() VALUES("${req.body.door_id}","${req.body.door_name}","${req.body.building_name}","${req.body.floor_number}")`;
+  // create try/catch for query
+  try {
+    // return
+    pool.query(addDoor, (err) => {
+      if (err) {
+        res.send("already a door with that ID ");
+        // alert("already a door with that ID ");
+      } else {
+        console.log(
+          `added "${req.body.door_id}","${req.body.door_name}","${req.body.building_name}","${req.body.floor_number}"`
+        );
+        try {
+          res.redirect("doors");
+          // res.redirect(307, "doors");
+          // pool.query("SELECT * FROM doors", (err, results) => {
+          //   if (err) throw err;
+          //   res.render("people", { peoples: results });
+        } catch (error) {
+          console.log("error!!!!");
+        }
+      }
+    });
+  } catch (err) {
+    console.log("error!!!!");
+  }
+
+  // console.log(req.body);
+  // const { door_name, building_name, floor_number } = req.body;
+  // doorss.push({ door_id: idGet(), door_name, building_name, floor_number });
+  // res.render("doors", { doorss, peoples });
+});
+
+app.post("/doors/delete", (req, res) => {
+  try {
+    const doors_ids = req.body;
+    if (doors_ids.data == "") {
+      res.send("No one selected");
+    }
+    pool.query(`DELETE FROM doors WHERE door_id IN (${doors_ids})`, (error) => {
+      if (error) {
+        throw error;
+      }
+      console.log(`deleted the following doors: "${doors_ids}"`);
+      try {
+        pool.query("SELECT * FROM doors", (err) => {
+          if (err) {
+            throw err;
+          }
+          res.redirect(307, "doors");
+        });
+      } catch (error) {
+        console.log("error!!!!");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// ##################################################################
 // routs for 'groups' page.
 // includes get and post for page and form logic
 // ##################################################################
@@ -184,32 +266,6 @@ app.get("/groupsPermissions", (req, res) => {
   res.render("groupsPermissions", { doorss, peoples });
 });
 
-// ##################################################################
-// routs for 'doors' page.
-// includes get and post for page and form logic
-// ##################################################################
-app.get("/doors", (req, res) => {
-  getDoors()
-    .then(res.render("doors", { doorss: doorss }))
-    .catch((error) => {
-      console.log(error);
-      console.log("Cant get Doors from server!");
-    });
-});
-// ##################################################################
-// doors post request
-// ##################################################################
-app.post("/doors", (req, res) => {
-  console.log(req.body);
-  const { door_name, building_name, floor_number } = req.body;
-  doorss.push({ door_id: idGet(), door_name, building_name, floor_number });
-  res.render("doors", { doorss, peoples });
-});
-
-app.delete("/doors/:door_id", (req, res) => {
-  const { door_id } = req.params;
-  doorss = doorss.filter((d) => d.door_id !== door_id);
-});
 // ##################################################################
 // routs for 'permissions' page.
 // includes get and post for page and form logic

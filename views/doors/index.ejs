@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <!-- Header -->
 <%- include('../partials/head') %>
 
@@ -21,8 +23,47 @@
         <button type="button" class="btn btn-danger">Group</button>
       </div>
       <div class="mid_button">
-        <button type="button" class="btn btn-danger">DELETE!</button>
+        <form action="/doors" method="GET">
+          <button
+            type="form"
+            onclick="deleteDoors()"
+            id="delete-button"
+            class="btn btn-danger"
+          >
+            DELETE!
+          </button>
+        </form>
       </div>
+      <script>
+        const deleteButton = document.querySelector("#delete-button");
+        deleteButton.addEventListener("click", (event) => {
+          const confirmed = confirm(
+            "Are you sure you want to delete the selected Doors?"
+          );
+          if (!confirmed) {
+            event.preventDefault();
+          }
+        });
+
+        function deleteDoors() {
+          rows = document.querySelector("tbody").querySelectorAll("tr");
+          let i = 0;
+          const id_list = [];
+          for (const row of rows) {
+            if (row.querySelector("#check" + `${row.id}`).checked) {
+              id_list.push(row.id);
+            }
+          }
+          console.log(id_list.length);
+          if (id_list.length >= 1) {
+            fetch(`/doors/delete`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(id_list),
+            });
+          }
+        }
+      </script>
     </div>
     <!-- TABLE -->
     <div class="col col-lg-8" id="tableSide-Div">
