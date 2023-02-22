@@ -56,16 +56,6 @@ let peoples;
 // get doors list
 // ##################################################################
 let doorss;
-const getDoors = async () => {
-  const doorget = "SELECT * FROM doors";
-  pool.query(doorget, (err, results) => {
-    if (err) throw err;
-    doorss = results;
-  });
-};
-getDoors().catch((error) => {
-  console.log("Cant get Doors from server!");
-});
 
 // ##################################################################
 // get permission list
@@ -277,7 +267,6 @@ app.get("/permissions", (req, res) => {
     .then(res.render("permissions", { doorss, peoples, permissions }))
     .catch(console.log("Cant get permissions from server!"));
 });
-
 // ##################################################################
 // permissions post
 // ##################################################################
@@ -295,7 +284,6 @@ app.post("/permissions", (req, res) => {
   });
   res.render("permissions", { doorss, peoples, permissionss });
 });
-
 // ##################################################################
 // esp GET request first try
 // ##################################################################
@@ -328,7 +316,13 @@ app.post("/ESP32POSTLOG", (req, res) => {
   // Print the ID to the console
   console.log(`Request received from ID ${id}`);
 });
-//
+// ##################################################################
+// respond with server time
+// ##################################################################
+app.get("/time", (req, res) => {
+  const timestamp = Math.floor(Date.now() / 1000);
+  res.json({ timestamp });
+});
 // ##################################################################
 // reply to any other path
 // ##################################################################
