@@ -10,7 +10,7 @@ USE labaccessdb;
 
 -- People table #########################################################################
 CREATE TABLE `People`(
-    `person_id` INT NOT NULL,
+    `person_id` BIGINT NOT NULL,
     `first_name` VARCHAR(255) NOT NULL,
     `last_name` VARCHAR(255) NOT NULL,
     `admin_system_access` TINYINT(1) NOT NULL,
@@ -25,7 +25,7 @@ ADD
 -- People_Groups table #########################################################################
 CREATE TABLE `People_Groups`(
     `person_group_id` INT NOT NULL,
-    `person_id` INT NOT NULL,
+    `person_id` BIGINT  NOT NULL,
 		FOREIGN KEY (`person_id`)
 		REFERENCES `People` (`person_id`)
 		ON DELETE CASCADE,
@@ -39,7 +39,7 @@ ADD
 
 -- Doors table #########################################################################
 CREATE TABLE `Doors`(
-    `door_id` INT NOT NULL,
+    `door_id` BIGINT NOT NULL,
     `door_name` VARCHAR(255) NOT NULL,
     `building_name` VARCHAR(255) NOT NULL,
     `floor_number` INT NOT NULL
@@ -53,7 +53,7 @@ ADD
 -- Door_Groups table #########################################################################
 CREATE TABLE `Door_Groups`(
     `door_group_id` INT NOT NULL,
-    `door_id` INT NOT NULL,
+    `door_id` BIGINT NOT NULL,
 	FOREIGN KEY (`door_id`)
 		REFERENCES `Doors` (`door_id`)
 		ON DELETE CASCADE,
@@ -67,7 +67,7 @@ ADD
   
 -- Permissions_table table #########################################################################
 CREATE TABLE `Permissions_table`(
-    `permission_id` INT NOT NULL,
+    `permission_id` BIGINT NOT NULL,
     `permission_type` VARCHAR(255) NOT NULL DEFAULT 'access' COMMENT 'permission type:
 
 \"Door Access\" - grants access to a door.
@@ -95,7 +95,7 @@ ADD
 -- Permission_Groups table #########################################################################
 CREATE TABLE `Permission_Groups`(
     `permission_group_id` INT NOT NULL,
-    `permission_id` INT NOT NULL,
+    `permission_id` BIGINT NOT NULL,
 	FOREIGN KEY (`permission_id`)
 		REFERENCES `Permissions_table` (`permission_id`)
 		ON DELETE CASCADE,
@@ -147,9 +147,9 @@ ADD
 
 CREATE TABLE `Door_Permission_list`(
   `id` INT NOT NULL,
-  `person_id` INT NOT NULL,
-  `door_id` INT NOT NULL,
-  `permission_id` INT NOT NULL,
+  `person_id` BIGINT  NOT NULL,
+  `door_id` BIGINT  NOT NULL,
+  `permission_id` BIGINT NOT NULL,
   `permission_type` VARCHAR(255) NOT NULL,
   `start_date` DATE NOT NULL,
   `expiry_date` DATE NOT NULL,
@@ -164,7 +164,7 @@ ADD
   
 CREATE TABLE `Creation_Archive`(
     `id` INT NOT NULL,
-    `admin_id` INT NOT NULL,
+    `admin_id` BIGINT NOT NULL,
     `entity_type` VARCHAR(255) NOT NULL,
     `entity_id` INT NOT NULL,
     `time` TIME NOT NULL,
@@ -177,10 +177,10 @@ ADD
   
 CREATE TABLE `Permission_Archive`(
     `id` INT NOT NULL,
-    `person_id` INT NOT NULL,
-    `admin_id` INT NOT NULL,
-    `door_id` INT NOT NULL,
-    `permission_id` INT NOT NULL,
+    `person_id` BIGINT  NOT NULL,
+    `admin_id` BIGINT  NOT NULL,
+    `door_id` BIGINT  NOT NULL,
+    `permission_id` BIGINT  NOT NULL,
     `date` TIMESTAMP NOT NULL,
     `time` TIME NOT NULL
   );
@@ -192,8 +192,8 @@ ADD
   
 CREATE TABLE `Access_History`(
     `id` INT NOT NULL,
-    `door_id` INT NOT NULL,
-    `person_id` INT NOT NULL,
+    `door_id` BIGINT  NOT NULL,
+    `person_id` BIGINT  NOT NULL,
     `date` TIMESTAMP NOT NULL,
     `entrence_method` VARCHAR(255) NOT NULL
   );

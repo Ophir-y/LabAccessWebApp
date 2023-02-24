@@ -110,7 +110,8 @@ app.post("/people", (req, res) => {
     pool.query(addPerson, (err, results) => {
       if (err) {
         res.send("already a person with that ID ");
-        // alert("already a person with that ID ");
+        throw err;
+        // res.alert("already a person with that ID ");
       } else {
         console.log(
           `added ${req.body.person_id},"${req.body.first_name}","${req.body.last_name}",${req.body.admin_system_access},"${req.body.admin_password}"`
@@ -187,7 +188,7 @@ app.post("/doors", (req, res) => {
     pool.query(addDoor, (err) => {
       if (err) {
         res.send("already a door with that ID ");
-        // alert("already a door with that ID ");
+        throw err;
       } else {
         console.log(
           `added "${req.body.door_id}","${req.body.door_name}","${req.body.building_name}","${req.body.floor_number}"`
@@ -205,6 +206,7 @@ app.post("/doors", (req, res) => {
     });
   } catch (err) {
     console.log("error!!!!");
+    console.log(err);
   }
 
   // console.log(req.body);
