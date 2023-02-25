@@ -1,13 +1,15 @@
 <!-- @format -->
 
-<!-- 1 of 2 -->
-<!-- form divider -->
-
-<form action="/doors" method="post" id="formSide-Div">
+<form
+  onsubmit="return checkId(this)"
+  action="/doors"
+  method="post"
+  id="formSide-Div"
+>
   <p class="formLable">Enter Door ID and Details</p>
   <div class="form">
     <div class="row">
-      <label class="formLable" for="doorID">ID: [DEC number]</label>
+      <label class="formLable" for="door_id">ID: [DEC number]</label>
       <input
         type="text"
         class="formInput"
@@ -15,7 +17,7 @@
         id="door_id"
         placeholder="ID"
         required
-        pattern="[0-9]{*}"
+        pattern="[0-9]{1,18}"
       />
     </div>
     <div class="row">
@@ -55,3 +57,4 @@
     <button type="submit" class="formButton">Press To Submit</button>
   </div>
 </form>
+<script src="js/doorFormLogic.js"></script>

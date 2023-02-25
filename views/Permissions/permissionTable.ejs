@@ -1,0 +1,87 @@
+<!-- @format -->
+
+<!-- table divider -->
+
+<table class="table searchable sortable" id="permissions_table">
+  <thead>
+    <tr>
+      <th class="table_checkbox" scope="col"></th>
+      <!-- number -->
+      <th scope="col">ID</th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="permission_type_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Type"
+        />
+      </th>
+      <!-- Date -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="initial_date_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Start"
+        />
+      </th>
+      <!-- Date -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="expiry_date_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Expiry"
+        />
+      </th>
+      <!-- Time -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="start_time_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Start Time"
+        />
+      </th>
+      <!-- Time -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="end_time_search"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="End Time"
+        />
+      </th>
+    </tr>
+  </thead>
+  <tbody id="container">
+    <% if (permissions) {%> <% permissions.forEach(function(p){%>
+    <tr onclick="selectRow(this)" id="<%=p.permission_id%>">
+      <!-- TDs ########################################################## -->
+      <td class="checkbox">
+        <!-- style="pointer-events: none;" makes it so the checkbox doesnt click itself -->
+        <input
+          type="checkbox"
+          style="pointer-events: none"
+          name="check<%=p.permission_id%>"
+          value="<%=p.permission_id%>"
+          id="check<%=p.permission_id%>"
+        />
+      </td>
+      <td class="id"><%=p.permission_id%></td>
+      <td class="permission_type_search"><%=p.permission_type%></td>
+      <td class="initial_date_search"><%=p.initial_date%></td>
+      <td class="expiry_date_search"><%=p.expiry_date%></td>
+      <td class="start_time_search"><%=p.start_time%></td>
+      <td class="end_time_search"><%=p.end_time%></td>
+    </tr>
+    <%});%> <%}%>
+    <script type="text/javascript" src="js/permissionsTableLogic.js"></script>
+  </tbody>
+</table>

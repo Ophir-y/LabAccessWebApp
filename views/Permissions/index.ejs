@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <!-- Header -->
 <%- include('../partials/head') %>
 
@@ -5,25 +7,65 @@
 <%- include('../partials/navbar') %>
 
 <!-- main page structure -->
-<div class="container text-center">
+<div class="text-center mainContainer">
   <div class="row header">
     <h1>Permissions</h1>
   </div>
   <div class="row">
     <!-- FORM -->
-    <div class="col col-lg-2" id="tableSide-Div">
+    <div class="col col-lg-3" id="tableSide-Div">
       <%- include('permissionForm') %>
     </div>
+
     <!-- Table Select Buttons -->
+    <div class="col col-lg-1">
+      <div class="mid_button">
+        <button type="button" class="btn btn-danger">Group</button>
+      </div>
+      <div class="mid_button">
+        <form action="/permissions" method="GET">
+          <button type="form" class="btn btn-danger" id="delete-button">
+            DELETE!
+          </button>
+        </form>
+      </div>
+      <script>
+        const deleteButton = document.querySelector("#delete-button");
+        deleteButton.addEventListener("click", (event) => {
+          const confirmed = confirm(
+            "Are you sure you want to delete the selected permissions?"
+          );
+          if (!confirmed) {
+            event.preventDefault();
+          } else {
+            deletePermission();
+          }
+        });
+
+        function deletePermission() {
+          rows = document.querySelector("tbody").querySelectorAll("tr");
+          let i = 0;
+          const id_list = [];
+          for (const row of rows) {
+            if (row.querySelector("#check" + `${row.id}`).checked) {
+              id_list.push(row.id);
+            }
+          }
+          if (id_list.length >= 1) {
+            fetch(`/permissions/delete`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(id_list),
+            });
+          }
+        }
+      </script>
+    </div>
 
     <!-- People TABLE -->
 
-    <div class="col col-lg-5" id="tableSide-Div">
-      <%- include('../people/peopleTable') %>
-    </div>
-    <!-- Door TABLE -->
-    <div class="col col-lg-5" id="tableSide-Div">
-      <%- include('../doors/doorTable') %>
+    <div class="col col-lg-8" id="tableSide-Div">
+      <%- include('permissionTable') %>
     </div>
   </div>
   <!-- footer -->

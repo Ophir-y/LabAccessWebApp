@@ -1,25 +1,33 @@
+<!-- @format -->
+
 <!-- 1 of 2 -->
 <!-- form divider -->
 
-<form action="/permissions" method="post" id="formSide-Div">
+<form
+  onsubmit="return checkId(this)"
+  action="/permissions"
+  method="post"
+  id="formSide-Div"
+>
   <p class="formLable">Enter permission Details</p>
   <div class="form">
-    <!-- <div class="row">
-      <label class="formLable" for="permissionID">ID:</label>
-      <input
-        type="text"
-        class="formInput"
-        name="permissionID"
-        id="permissionID"
-        placeholder="ID"
-      />
-    </div> -->
     <div class="row">
-      <label class="formLable" for="perType">Choose Type</label>
+      <label class="formLable" for="permission_id">ID:</label>
+      <input
+        class="formInput"
+        name="permission_id"
+        id="permission_id"
+        placeholder="ID"
+        pattern="[0-9]{1,9}"
+        required
+      />
+    </div>
+    <div class="row">
+      <label class="formLable" for="permission_type">Choose Type</label>
       <select
-        name="perType"
+        name="permission_type"
         class="selectFormInput"
-        id="perType"
+        id="permission_type"
         placeholder="Permission Type"
       >
         <option name="Door Access">Door Access</option>
@@ -31,48 +39,51 @@
       </select>
     </div>
     <div class="row">
-      <label class="formLable" for="initialDate">Initial Date:</label>
+      <label class="formLable" for="initial_date">Initial Date:</label>
       <input
         type="date"
         class="formInput"
-        name="initialDate"
-        id="initialDate"
+        name="initial_date"
+        id="initial_date"
         placeholder="Initial Date"
+        required
       />
     </div>
-
     <!-- expiry date -->
     <!-- must be after initial date -->
     <div class="row">
-      <label class="formLable" for="expiryDate">Expiry Date:</label>
+      <label class="formLable" for="expiry_date">Expiry Date:</label>
       <input
         type="date"
         class="formInput"
-        name="expiryDate"
-        id="expiryDate"
+        name="expiry_date"
+        id="expiry_date"
         placeholder="Expiry Date"
+        required
       />
     </div>
     <!-- Start time, defines the time where the permission starts to take effect daily -->
     <!-- if no input is inserted, the permission will be granted for the whole day -->
     <div class="row">
-      <label class="formLable" for="startTime">Start Time:</label>
+      <label class="formLable" for="start_time">Start Time:</label>
       <input
         type="time"
         class="formInput"
-        name="startTime"
-        id="startTime"
+        name="start_time"
+        id="start_time"
         placeholder="Start Time"
+        required
       />
     </div>
     <div class="row">
-      <label class="formLable" for="endTime">End Time:</label>
+      <label class="formLable" for="end_time">End Time:</label>
       <input
         type="time"
         class="formInput"
-        name="endTime"
-        id="endTime"
+        name="end_time"
+        id="end_time"
         placeholder="End Time"
+        required
       />
     </div>
     <button type="submit" class="formButton">Press To Submit</button>
@@ -90,3 +101,4 @@
     >
   </p>
 </form>
+<script src="js/permissionsFormLogic.js"></script>

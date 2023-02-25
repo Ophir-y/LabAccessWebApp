@@ -24,12 +24,7 @@
       </div>
       <div class="mid_button">
         <form action="/doors" method="GET">
-          <button
-            type="form"
-            onclick="deleteDoors()"
-            id="delete-button"
-            class="btn btn-danger"
-          >
+          <button type="form" id="delete-button" class="btn btn-danger">
             DELETE!
           </button>
         </form>
@@ -42,6 +37,8 @@
           );
           if (!confirmed) {
             event.preventDefault();
+          } else {
+            deleteDoors();
           }
         });
 
@@ -54,7 +51,6 @@
               id_list.push(row.id);
             }
           }
-          console.log(id_list.length);
           if (id_list.length >= 1) {
             fetch(`/doors/delete`, {
               method: "POST",

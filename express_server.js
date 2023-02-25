@@ -35,40 +35,10 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// ##################################################################
-// get person list
-// ##################################################################
-
-let peoples;
-
-// const getPeople = async () => {
-//   const personget = "SELECT * FROM people";
-//   pool.query(personget, (err, results) => {
-//     if (err) throw err;
-//     peoples = results;
-//   });
-// };
-// getPeople().catch((error) => {
-//   console.log("Cant get people from server!");
-// });
-
-// ##################################################################
-// get doors list
-// ##################################################################
-let doorss;
-
-// ##################################################################
-// get permission list
-// ##################################################################
-let permissionss;
-const getPermissions = async () => {
-  const permissionget = "SELECT * FROM permissions";
-  pool.query(permissionget, (err, results) => {
-    if (err) throw err;
-    const permissionss = results;
-  });
-};
-
+app.use(function (req, res, next) {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  next();
+});
 // ##################################################################
 // routs:
 // routs to different pages on website:
@@ -102,30 +72,29 @@ app.post("/people", (req, res) => {
   } else {
     req.body.admin_system_access = 0;
   }
-  //create add person sql queiry command
-  const addPerson = `INSERT INTO people() VALUES(${req.body.person_id},"${req.body.first_name}","${req.body.last_name}",${req.body.admin_system_access},"${req.body.admin_password}")`;
   // create try/catch for query
   try {
     // return
-    pool.query(addPerson, (err, results) => {
-      if (err) {
-        res.send("already a person with that ID ");
-        throw err;
-        // res.alert("already a person with that ID ");
-      } else {
-        console.log(
-          `added ${req.body.person_id},"${req.body.first_name}","${req.body.last_name}",${req.body.admin_system_access},"${req.body.admin_password}"`
-        );
-        try {
-          pool.query("SELECT * FROM people", (err, results) => {
-            if (err) throw err;
-            res.render("people", { peoples: results });
-          });
-        } catch (error) {
-          console.log("error!!!!");
+    pool.query(
+      `INSERT INTO people() VALUES(
+      '${req.body.person_id}',
+      '${req.body.first_name}',
+      '${req.body.last_name}',
+      '${req.body.admin_system_access}',
+      '${req.body.admin_password}')`,
+      (err) => {
+        if (err) {
+          res.send("already a person with that ID ");
+          return;
+          // res.alert('already a person with that ID ');
+        } else {
+          console.log(
+            `added ${req.body.person_id},'${req.body.first_name}','${req.body.last_name}',${req.body.admin_system_access},'${req.body.admin_password}'`
+          );
+          res.redirect("/people");
         }
       }
-    });
+    );
   } catch (err) {
     console.log("error!!!!");
   }
@@ -143,17 +112,7 @@ app.post("/people/delete", (req, res) => {
         if (error) {
           throw error;
         }
-
-        try {
-          pool.query("SELECT * FROM people", (err, results) => {
-            if (err) {
-              throw err;
-            }
-            res.redirect(307, "people");
-          });
-        } catch (error) {
-          console.log("error!!!!");
-        }
+        res.redirect("/people");
       }
     );
   } catch (error) {}
@@ -181,24 +140,24 @@ app.post("/doors", (req, res) => {
     res.send("ERROR: no body was sent!");
   }
   //create add door sql queiry command
-  const addDoor = `INSERT INTO doors() VALUES("${req.body.door_id}","${req.body.door_name}","${req.body.building_name}","${req.body.floor_number}")`;
+  const addDoor = `INSERT INTO doors() VALUES('${req.body.door_id}','${req.body.door_name}','${req.body.building_name}','${req.body.floor_number}')`;
   // create try/catch for query
   try {
     // return
     pool.query(addDoor, (err) => {
       if (err) {
         res.send("already a door with that ID ");
-        throw err;
+        return;
       } else {
         console.log(
-          `added "${req.body.door_id}","${req.body.door_name}","${req.body.building_name}","${req.body.floor_number}"`
+          `added '${req.body.door_id}','${req.body.door_name}','${req.body.building_name}','${req.body.floor_number}'`
         );
         try {
           res.redirect("doors");
-          // res.redirect(307, "doors");
-          // pool.query("SELECT * FROM doors", (err, results) => {
+          // res.redirect(307, 'doors');
+          // pool.query('SELECT * FROM doors', (err, results) => {
           //   if (err) throw err;
-          //   res.render("people", { peoples: results });
+          //   res.render('people', { peoples: results });
         } catch (error) {
           console.log("error!!!!");
         }
@@ -207,34 +166,38 @@ app.post("/doors", (req, res) => {
   } catch (err) {
     console.log("error!!!!");
     console.log(err);
+    return;
   }
 
   // console.log(req.body);
   // const { door_name, building_name, floor_number } = req.body;
   // doorss.push({ door_id: idGet(), door_name, building_name, floor_number });
-  // res.render("doors", { doorss, peoples });
+  // res.render('doors', { doorss, peoples });
 });
 
 app.post("/doors/delete", (req, res) => {
+  const doors_ids = req.body;
+  if (doors_ids.data == "") {
+    res.send("No one selected");
+  }
   try {
-    const doors_ids = req.body;
-    if (doors_ids.data == "") {
-      res.send("No one selected");
-    }
     pool.query(`DELETE FROM doors WHERE door_id IN (${doors_ids})`, (error) => {
       if (error) {
-        throw error;
+        res.send("Unable to delete doors");
+        return;
       }
-      console.log(`deleted the following doors: "${doors_ids}"`);
+      console.log(`deleted the following doors: '${doors_ids}'`);
       try {
         pool.query("SELECT * FROM doors", (err) => {
           if (err) {
-            throw err;
+            res.send("Unable to delete doors");
+            return;
           }
-          res.redirect(307, "doors");
+          res.redirect("/doors");
         });
       } catch (error) {
         console.log("error!!!!");
+        return;
       }
     });
   } catch (error) {
@@ -242,6 +205,90 @@ app.post("/doors/delete", (req, res) => {
   }
 });
 
+// ##################################################################
+// routs for 'permissions' page.
+// includes get and post for page and form logic
+// ##################################################################
+app.get("/permissions", (req, res) => {
+  try {
+    pool.query("SELECT * FROM Permissions_table", (err, results) => {
+      if (err) throw err;
+      res.render("permissions", { permissions: results });
+    });
+  } catch (error) {
+    console.log("error!!!!");
+  }
+});
+// ##################################################################
+// permissions post
+// ##################################################################
+app.post("/permissions", (req, res) => {
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+    return;
+  }
+  // create try/catch for query
+  try {
+    // return
+    pool.query(
+      `INSERT INTO permissions_table() VALUES(
+      '${req.body.permission_id}',
+      '${req.body.permission_type}',
+      '${req.body.initial_date}',
+      '${req.body.expiry_date}',
+      '${req.body.start_time}',
+      '${req.body.end_time}')`,
+      (err) => {
+        if (err) {
+          res.send(err);
+          return;
+        } else {
+          console.log(`added '${req.body}'}'`);
+          res.redirect("permissions");
+        }
+      }
+    );
+  } catch (err) {
+    console.log("error!!!!");
+    console.log(err);
+    return;
+  }
+});
+
+app.post("/permissions/delete", (req, res) => {
+  const permission_ids = req.body;
+  if (permission_ids.data == "") {
+    res.send("No one selected");
+  }
+  try {
+    pool.query(
+      `DELETE FROM permissions_table WHERE permission_id IN (${permission_ids})`,
+      (error) => {
+        if (error) {
+          res.send(err);
+          return;
+        } else {
+          console.log(`deleted the following permission: '${permission_ids}'`);
+          try {
+            pool.query("SELECT * FROM doors", (err) => {
+              if (err) {
+                res.send("Unable to delete doors");
+                return;
+              }
+              res.redirect(303, "/permissions");
+            });
+          } catch (error) {
+            console.log("error!!!!");
+            return;
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+});
 // ##################################################################
 // routs for 'groups' page.
 // includes get and post for page and form logic
@@ -258,34 +305,6 @@ app.get("/groupsPermissions", (req, res) => {
   res.render("groupsPermissions", { doorss, peoples });
 });
 
-// ##################################################################
-// routs for 'permissions' page.
-// includes get and post for page and form logic
-// ##################################################################
-app.get("/permissions", (req, res) => {
-  getPermissions()
-    .then(getDoors())
-    .then(getPeople())
-    .then(res.render("permissions", { doorss, peoples, permissions }))
-    .catch(console.log("Cant get permissions from server!"));
-});
-// ##################################################################
-// permissions post
-// ##################################################################
-app.post("/permissions", (req, res) => {
-  console.log(req.body);
-  const { permission_type, initial_date, expiry_date, start_time, end_time } =
-    req.body;
-  permissionss.push({
-    permissions_id: idGet(),
-    permission_type,
-    initial_date,
-    expiry_date,
-    start_time,
-    end_time,
-  });
-  res.render("permissions", { doorss, peoples, permissionss });
-});
 // ##################################################################
 // esp GET request first try
 // ##################################################################
