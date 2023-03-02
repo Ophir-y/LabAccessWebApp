@@ -132,7 +132,6 @@ ALTER TABLE
 ADD
   PRIMARY KEY (
     `person_group_id`,
-    `permission_group_id`,
     `door_group_id`
   );
 
