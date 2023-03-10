@@ -24,7 +24,6 @@ ADD
 
 -- People_Groups table #########################################################################
 CREATE TABLE `People_Groups`(
-    `person_group_id` INT NOT NULL,
     `person_id` BIGINT  NOT NULL,
 		FOREIGN KEY (`person_id`)
 		REFERENCES `People` (`person_id`)
@@ -34,7 +33,7 @@ CREATE TABLE `People_Groups`(
 ALTER TABLE
   `People_Groups`
 ADD
-  PRIMARY KEY (`person_group_id`, `person_id`);
+  PRIMARY KEY (`person_group_name`, `person_id`);
 
 
 -- Doors table #########################################################################
@@ -52,7 +51,6 @@ ADD
 
 -- Door_Groups table #########################################################################
 CREATE TABLE `Door_Groups`(
-    `door_group_id` INT NOT NULL,
     `door_id` BIGINT NOT NULL,
 	FOREIGN KEY (`door_id`)
 		REFERENCES `Doors` (`door_id`)
@@ -62,7 +60,7 @@ CREATE TABLE `Door_Groups`(
 ALTER TABLE
   `Door_Groups`
 ADD
-  PRIMARY KEY (`door_group_id`, `door_id`);
+  PRIMARY KEY (`door_group_name`, `door_id`);
   
   
 -- Permissions_table table #########################################################################
@@ -94,7 +92,6 @@ ADD
 
 -- Permission_Groups table #########################################################################
 CREATE TABLE `Permission_Groups`(
-    `permission_group_id` INT NOT NULL,
     `permission_id` BIGINT NOT NULL,
 	FOREIGN KEY (`permission_id`)
 		REFERENCES `Permissions_table` (`permission_id`)
@@ -104,35 +101,36 @@ CREATE TABLE `Permission_Groups`(
 ALTER TABLE
   `Permission_Groups`
 ADD
-  PRIMARY KEY (`permission_group_id`, `permission_id`);
+  PRIMARY KEY (`permission_group_name`, `permission_id`);
 
 
 -- Peoples_Permissions_Doors table #########################################################################
 CREATE TABLE `Peoples_Permissions_Doors`(
-    `person_group_id` INT NOT NULL,
-    FOREIGN KEY (person_group_id)
-	REFERENCES `People_Groups` (`person_group_id`)
+    `person_group_name` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (person_group_name)
+	REFERENCES `People_Groups` (`person_group_name`)
 	ON DELETE CASCADE,
 	
-    `door_group_id` INT NOT NULL,
-    FOREIGN KEY (`door_group_id`)
-	    REFERENCES `Door_Groups` (`door_group_id`)
+    `door_group_name` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`door_group_name`)
+	    REFERENCES `Door_Groups` (`door_group_name`)
 	    ON DELETE CASCADE,
-    `permission_group_id` INT NOT NULL,
-    FOREIGN KEY (`permission_group_id`)
-	REFERENCES `Permission_Groups` (`permission_group_id`)
-	ON DELETE CASCADE,
 
     `permission_group_name` VARCHAR(255) NOT NULL,
-    `person_group_name` VARCHAR(255) NOT NULL,
-    `door_group_name` VARCHAR(255) NOT NULL
+    FOREIGN KEY (`permission_group_name`)
+	REFERENCES `Permission_Groups` (`permission_group_name`)
+	ON DELETE CASCADE,
+    
+    `Description` VARCHAR(255) NULL DEFAULT '000000'
+
   );
 ALTER TABLE
   `Peoples_Permissions_Doors`
 ADD
   PRIMARY KEY (
-    `person_group_id`,
-    `door_group_id`
+    `person_group_name`,
+    `door_group_name`,
+    `permission_group_name`
   );
 
   

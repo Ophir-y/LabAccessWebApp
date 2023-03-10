@@ -18,49 +18,7 @@
     </div>
 
     <!-- Table Select Buttons -->
-    <div class="col col-lg-1">
-      <div class="mid_button">
-        <button type="button" class="btn btn-danger">Group</button>
-      </div>
-      <div class="mid_button">
-        <form action="/people" method="GET">
-          <button type="form" class="btn btn-danger" id="delete-button">
-            DELETE!
-          </button>
-        </form>
-      </div>
-      <script>
-        const deleteButton = document.querySelector("#delete-button");
-        deleteButton.addEventListener("click", (event) => {
-          const confirmed = confirm(
-            "Are you sure you want to delete the selected people?"
-          );
-          if (!confirmed) {
-            event.preventDefault();
-          } else {
-            deletePerson();
-          }
-        });
-
-        function deletePerson() {
-          rows = document.querySelector("tbody").querySelectorAll("tr");
-          let i = 0;
-          const id_list = [];
-          for (const row of rows) {
-            if (row.querySelector("#check" + `${row.id}`).checked) {
-              id_list.push(row.id);
-            }
-          }
-          if (id_list.length >= 1) {
-            fetch(`/people/delete`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(id_list),
-            });
-          }
-        }
-      </script>
-    </div>
+    <div class="col col-lg-1"><%- include('peopleTableButtons', groups) %></div>
 
     <!-- TABLE -->
     <div class="col col-lg-8" id="tableSide-Div">

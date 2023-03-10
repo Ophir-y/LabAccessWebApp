@@ -1,0 +1,193 @@
+<!-- group button -->
+<div class="mid_button">
+  <button type="button" class="btn btn-danger" id="popupBtn">Group</button>
+  <!-- Pop UP section for group -->
+  <div id="popupContainer">
+    <div id="popup">
+      <h2>Fill out the Groups details</h2>
+      <form
+        id="new_group_form"
+        onsubmit="return checkgroupName(this)"
+        action="/people"
+        method="get"
+      >
+        <!-- add group checkbox -->
+        <div class="row">
+          <!-- input hidden to get unchecked value -->
+          <label class="formLable" for="new_group_checkbox">New Group?</label>
+          <input
+            type="checkbox"
+            id="new_group_checkbox"
+            class="formInput"
+            name="new_group_checkbox"
+          />
+        </div>
+        <div class="row form_group_list">
+          <label class="formLable" for="People_group_list">Choose Name</label>
+          <select
+            name="People_group_list"
+            class="selectFormInput"
+            id="People_group_list"
+            placeholder="Choose Existing Group"
+          >
+            <!-- add all the  -->
+            <% if(groups) { %> <% groups.forEach(group_name => { %>
+
+            <option name="<%=group_name.person_group_name%>">
+              <%=group_name.person_group_name%>
+            </option>
+            <% }) %> <% } %>
+          </select>
+        </div>
+        <!-- will be visible if checkbox for add group is checked -->
+        <div class="form_group_hide">
+          <label for="person_group_name">Name:</label>
+          <input
+            class="formInput"
+            type="text"
+            id="person_group_name"
+            name="person_group_name"
+            placeholder="Repeat Password"
+            minlength="1"
+          />
+        </div>
+        <button type="submit" id="groupsubmit">Submit</button>
+      </form>
+      <button id="closeBtn">Close</button>
+    </div>
+  </div>
+</div>
+<!-- delete button -->
+<div class="mid_button">
+  <form action="/people" method="GET">
+    <button type="form" class="btn btn-danger" id="delete-button">
+      DELETE!
+    </button>
+  </form>
+</div>
+<script>
+  // checked logic:
+  const hiden_div = document.querySelectorAll(".form_group_hide");
+  const list_div = document.querySelectorAll(".form_group_list");
+  const checkbox_for_group = document.querySelector("#new_group_checkbox");
+
+  // make passwords hidden
+  for (const elem of hiden_div) {
+    elem.style.visibility = "hidden";
+  }
+  // if admin is checked then unhide
+  checkbox_for_group.addEventListener("change", () => {
+    if (checkbox_for_group.checked) {
+      for (const elem of list_div) {
+        elem.style.visibility = "hidden";
+      }
+      for (const elem of hiden_div) {
+        elem.style.visibility = "visible";
+      }
+    } else {
+      for (const elem of list_div) {
+        elem.style.visibility = "visible";
+      }
+      for (const elem of hiden_div) {
+        elem.style.visibility = "hidden";
+      }
+    }
+  });
+
+  //getting the different buttons and adding event listners to them.
+  const popupBtn = document.getElementById("popupBtn");
+  const submitBtn = document.getElementById("groupsubmit");
+  const closeBtn = document.getElementById("closeBtn");
+  const popupContainer = document.getElementById("popupContainer");
+
+  popupBtn.addEventListener("click", function () {
+    popupContainer.style.display = "block";
+  });
+  closeBtn.addEventListener("click", function () {
+    popupContainer.style.display = "none";
+  });
+  submitBtn.addEventListener("click", function () {
+    popupContainer.style.display = "none";
+    groupSelected();
+  });
+
+  // sends a request to server to add a people group to the database
+  function groupSelected() {
+    // get rows of table
+    const rows = document.querySelector("tbody").querySelectorAll("tr");
+    // get the popup form.
+    const groupForm = document.getElementById("new_group_form");
+    let group_name;
+    // check if the checkbox is checked
+    // if so then the user has chosen to create a new group
+    // if not then the user will pick from a list of groups.
+    if (checkbox_for_group.checked) {
+      group_name = groupForm.person_group_name.value;
+    } else {
+      group_name = groupForm.People_group_list.value;
+    }
+
+    const id_list = [];
+    for (const row of rows) {
+      if (row.querySelector("#check" + `${row.id}`).checked) {
+        let person_id = row.id;
+        let people_group_row = {
+          person_id,
+          group_name,
+        };
+        id_list.push(people_group_row);
+      }
+    }
+    if (id_list.length >= 1) {
+      fetch(`/people_groups`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(id_list),
+      });
+    }
+  }
+
+  // add event listner to delete button.
+  // on click it checks for confirmation
+  // and then if confirmed continues to the delete request.
+  const deleteButton = document.querySelector("#delete-button");
+  deleteButton.addEventListener("click", (event) => {
+    const confirmed = confirm(
+      "Are you sure you want to delete the selected people?"
+    );
+    if (!confirmed) {
+      event.preventDefault();
+    } else {
+      deletePerson();
+    }
+  });
+
+  function deletePerson() {
+    const rows = document.querySelector("tbody").querySelectorAll("tr");
+    const id_list = [];
+    for (const row of rows) {
+      if (row.querySelector("#check" + `${row.id}`).checked) {
+        id_list.push(row.id);
+      }
+    }
+    if (id_list.length >= 1) {
+      fetch(`/people/delete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(id_list),
+      });
+    }
+  }
+
+  function checkgroupName(form) {
+    const formInput = form.person_group_name.value;
+
+    if (form.new_group_checkbox.checked) {
+      if (formInput === "") {
+        alert("Group Name Can't be empty");
+        return false;
+      }
+    }
+    return true;
+  }
+</script>
