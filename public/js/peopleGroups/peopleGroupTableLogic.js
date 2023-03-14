@@ -1,10 +1,11 @@
 /** @format */
-
+// select row
 function selectRow(row) {
   const rowInput = row.getElementsByTagName("input")[0];
   rowInput.checked = !rowInput.checked;
 }
 
+// reccomend to change with somthing better.
 // use search box to search table for names and ids
 function tableSearchFunction(name) {
   // initiation
@@ -13,7 +14,7 @@ function tableSearchFunction(name) {
   input = document.querySelector("#" + `${name}`);
   filter = input.value.toUpperCase();
   // get row elements of table
-  table = document.querySelector("#people_table");
+  table = document.querySelector("#people_group_table");
   trs = table.getElementsByTagName("tr");
 
   //go through each row element and do the following:
@@ -27,7 +28,12 @@ function tableSearchFunction(name) {
       // if we are an ID column and the search input is not a number check if we have that input
       // or: if we are searching names check if the name exists in the rows below
       if (!(!filter || filter.length === 0)) {
-        if (name === "id" || name === "first_name" || name === "last_name") {
+        if (
+          name === "people_group_name" ||
+          name === "id" ||
+          name === "first_name" ||
+          name === "last_name"
+        ) {
           // get only the rows where the input matches the row string values.
           // compare only the charecters which are within the filters string length.
           if (txtValue.toUpperCase().slice(0, filter.length) == filter) {

@@ -112,7 +112,6 @@ app.post("/people/delete", (req, res) => {
     if (person_ids.data == "") {
       res.send("No one selected");
     }
-    console.log(req.body);
     pool.query(
       `DELETE FROM people WHERE person_id IN (${person_ids})`,
       (error) => {
@@ -156,9 +155,6 @@ app.post("/doors", (req, res) => {
         res.send("already a door with that ID ");
         return;
       } else {
-        console.log(
-          `added '${req.body.door_id}','${req.body.door_name}','${req.body.building_name}','${req.body.floor_number}'`
-        );
         try {
           res.redirect("doors");
           // res.redirect(307, 'doors');
@@ -195,7 +191,7 @@ app.post("/doors/delete", (req, res) => {
         res.send("Unable to delete doors");
         return;
       }
-      console.log(`deleted the following doors: '${doors_ids}'`);
+      // console.log(`deleted the following doors: '${doors_ids}'`);
       try {
         pool.query("SELECT * FROM doors", (err) => {
           if (err) {
@@ -252,7 +248,7 @@ app.post("/permissions", (req, res) => {
           res.send(err);
           return;
         } else {
-          console.log(`added '${req.body}'}'`);
+          // console.log(`added '${req.body}'}'`);
           res.redirect("permissions");
         }
       }
@@ -277,7 +273,7 @@ app.post("/permissions/delete", (req, res) => {
           res.send(err);
           return;
         } else {
-          console.log(`deleted the following permission: '${permission_ids}'`);
+          // console.log(`deleted the following permission: '${permission_ids}'`);
           try {
             pool.query("SELECT * FROM doors", (err) => {
               if (err) {
@@ -322,7 +318,7 @@ app.post("/people_groups", (req, res) => {
   if (!req.body) {
     res.send("ERROR: no body was sent!");
   }
-  console.log(req.body);
+  // console.log(req.body);
   try {
     // return
     let query =
@@ -355,6 +351,34 @@ app.post("/people_groups", (req, res) => {
   }
 
   // res.render("people_groups", { doorss, peoples });
+});
+
+app.post("/people_groups/delete", (req, res) => {
+  const peopleToDelete = req.body;
+  if (!Array.isArray(peopleToDelete) || peopleToDelete.length === 0) {
+    res.status(400).send("Invalid input");
+    return;
+  }
+
+  const values = peopleToDelete.map((row) => [
+    row.person_id,
+    row.person_group_name,
+  ]);
+  const sql = `DELETE FROM people_groups WHERE (person_id,person_group_name) IN (?)`;
+  //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
+  pool.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("An error occurred while deleting the records");
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.status(404).send("Records not found");
+      return;
+    }
+    res.status(200).redirect("/people_groups");
+  });
 });
 
 // ##################################################################
