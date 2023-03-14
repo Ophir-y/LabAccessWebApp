@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <!-- group button -->
 <div class="mid_button">
   <button type="button" class="btn btn-danger" id="popupBtn">Group</button>
@@ -31,7 +33,8 @@
             placeholder="Choose Existing Group"
           >
             <!-- add all the  -->
-            <% if(groups) { %> <% groups.forEach(group_name => { %>
+            <% if(people_groups) { %> <% people_groups.forEach(group_name => {
+            %>
 
             <option name="<%=group_name.person_group_name%>">
               <%=group_name.person_group_name%>

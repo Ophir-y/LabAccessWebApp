@@ -1,3 +1,4 @@
+<!-- @format -->
 <!-- Header -->
 <%- include('../partials/head') %>
 
@@ -5,6 +6,40 @@
 <%- include('../partials/navbar') %>
 
 <!-- main page structure -->
+<div class="text-center mainContainer">
+  <div class="row header">
+    <h1>People Groups</h1>
+  </div>
+<div class="row">
+   <!-- Table Select Buttons -->
+  <div class="col col-lg-2">
+    <%- include('PeopleGroupsTableButtons') %>
+  </div>
+
+  <!-- TABLE -->
+  <div class="col col-lg-10">
+    <%- include('PeopleGroupsTable') %>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
 
   <!-- footer -->
   <%- include('../partials/footer') %>

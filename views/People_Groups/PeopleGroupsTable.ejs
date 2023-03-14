@@ -1,12 +1,21 @@
 <!-- @format -->
 
 <!-- table divider -->
-
-<table class="table searchable sortable" id="people_table">
+<table class="table searchable sortable" id="people_group_table">
+  <!-- header -->
   <thead>
     <tr>
       <th class="table_checkbox" scope="col"></th>
-      <!-- <input type="checkbox" name="select_row" id="select_row" /> -->
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="people_group_name"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="People Group Name"
+        />
+      </th>
       <th scope="col">
         <input
           type="text"
@@ -36,19 +45,15 @@
           placeholder="Last Name"
         />
       </th>
-      <!-- string -->
-      <th class="table_checkbox" scope="col" onclick="adminSelectToggle()">
-        Admin
-      </th>
-      <!-- check ( &#x2714; )or cross (&#x274C;) -->
     </tr>
   </thead>
+  <!-- table body -->
   <tbody id="container">
-    <% if (peoples) {%> <% peoples.forEach(function(p){%>
+    <% if (people_groups) { %> <% people_groups.forEach(function(pg){%>
+
     <tr
       onclick="selectRow(this)"
-      id="<%=p.person_id%>"
-      class="<%=p.admin_system_access%>"
+      id="<%=pg.person_id%><%=pg.person_group_name%>"
     >
       <!-- TDs ########################################################## -->
       <td class="checkbox">
@@ -56,20 +61,18 @@
         <input
           type="checkbox"
           style="pointer-events: none"
-          name="check<%=p.person_id%>"
-          value="<%=p.person_id%>"
-          id="check<%=p.person_id%>"
+          name="check<%=pg.person_id%><%=pg.person_group_name%>"
+          value="<%=pg.person_id%><%=pg.person_group_name%>"
+          id="check<%=pg.person_id%><%=pg.person_group_name%>"
         />
       </td>
-      <td class="id"><%=p.person_id %></td>
-      <td class="first_name"><%=p.first_name %></td>
-      <td class="last_name"><%=p.last_name %></td>
-      <td class="<%=p.admin_system_access%>">
-        <% if (p.admin_system_access) { %> &#10004; <% } else { %> &#10060; <% }
-        %>
-      </td>
+      <td><%=pg.person_group_name%></td>
+      <td><%=pg.person_id%></td>
+      <td><%=pg.first_name%></td>
+      <td><%=pg.last_name%></td>
     </tr>
-    <%});%> <%}%>
-    <script src="js/peopleTableLogic.js"></script>
+
+    <% }) %> <% } %>
+    <script src="js/peopleGroupTableLogic.js"></script>
   </tbody>
 </table>

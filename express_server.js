@@ -59,7 +59,7 @@ app.get("/people", (req, res) => {
         "SELECT DISTINCT person_group_name FROM people_groups",
         (err, results2) => {
           if (err) throw err;
-          res.render("people", { peoples: results1, groups: results2 });
+          res.render("people", { peoples: results1, people_groups: results2 });
         }
       );
     });
@@ -303,7 +303,19 @@ app.post("/permissions/delete", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/people_groups", (req, res) => {
-  res.render("people_groups", { doorss, peoples });
+  try {
+    pool.query(
+      "SELECT people_groups.person_group_name, people_groups.person_id, people.first_name, people.last_name FROM people_groups JOIN People  ON People.person_id = People_Groups.person_id;",
+      (err, results1) => {
+        if (err) throw err;
+        res.render("people_groups", {
+          people_groups: results1,
+        });
+      }
+    );
+  } catch (error) {
+    console.log("error!!!!");
+  }
 });
 
 app.post("/people_groups", (req, res) => {
@@ -317,7 +329,12 @@ app.post("/people_groups", (req, res) => {
       "INSERT INTO people_groups( person_id, person_group_name) VALUES ?";
     pool.query(
       query,
-      [req.body.map((group) => [group.person_id, group.group_name])],
+      [
+        req.body.map((people_groups) => [
+          people_groups.person_id,
+          people_groups.group_name,
+        ]),
+      ],
       (err) => {
         if (err) {
           console.log(err);
