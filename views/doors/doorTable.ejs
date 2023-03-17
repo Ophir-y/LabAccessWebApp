@@ -44,7 +44,7 @@
   <tbody id="container">
     <% if (doorss) {%> <% doorss.forEach(function(d){%>
     <tr onclick="selectRow(this)" id="<%=d.door_id%>">
-      <td>
+      <td class="checkbox">
         <input
           type="checkbox"
           name="check<%=d.door_id%>"
@@ -59,6 +59,6 @@
       <td class="floor_number_search"><%=d.floor_number %></td>
     </tr>
     <%});%> <%}%>
-    <script type="text/javascript" src="js/doorTableLogic.js"></script>
+    <script type="text/javascript" src="js/doors/doorTableLogic.js"></script>
   </tbody>
 </table>

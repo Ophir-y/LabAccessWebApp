@@ -1,0 +1,75 @@
+<!-- @format -->
+
+<!-- table divider -->
+<table class="table searchable sortable" id="door_group_table">
+  <!-- header -->
+  <thead>
+    <tr>
+      <th class="table_checkbox" scope="col"></th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="door_group_name"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Door Group Name"
+        />
+      </th>
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="id"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="ID"
+        />
+      </th>
+      <!-- number -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="first_name"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="First Name"
+        />
+      </th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="last_name"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Last Name"
+        />
+      </th>
+    </tr>
+  </thead>
+  <!-- table body -->
+  <tbody id="container">
+    <% if (door_groups) { %> <% door_groups.forEach(function(pg){%>
+
+    <tr onclick="selectRow(this)" id="<%=pg.door_id%><%=pg.door_group_name%>">
+      <!-- TDs ########################################################## -->
+      <td class="checkbox">
+        <!-- style="pointer-events: none;" makes it so the checkbox doesnt click itself -->
+        <input
+          type="checkbox"
+          style="pointer-events: none"
+          name="check<%=pg.door_id%><%=pg.door_group_name%>"
+          value="<%=pg.door_id%><%=pg.door_group_name%>"
+          id="check<%=pg.door_id%><%=pg.door_group_name%>"
+        />
+      </td>
+      <td class="door_group_name"><%=pg.door_group_name%></td>
+      <td class="id"><%=pg.door_id%></td>
+      <td class="door_name"><%=pg.door_name%></td>
+      <td class="building_name"><%=pg.building_name%></td>
+    </tr>
+
+    <% }) %> <% } %>
+    <script src="js/doorGroups/doorGroupTableLogic.js"></script>
+  </tbody>
+</table>

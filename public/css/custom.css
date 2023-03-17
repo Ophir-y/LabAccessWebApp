@@ -1,4 +1,9 @@
-/*######################### general styles ###################### */
+/**
+ * ######################### general styles ######################
+ *
+ * @format
+ */
+
 .header {
   border-bottom: 1px solid;
   border-color: black;
@@ -109,6 +114,14 @@ tbody tr:hover {
 .formInput {
   max-width: 200px;
   width: 80%;
+}
+.formCheckboxlable {
+  background-position: 5px 10px;
+  text-align: right;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  width: 100%;
+  padding: 6px 10px 6px 40px;
 }
 
 .formButton {

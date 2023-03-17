@@ -130,9 +130,15 @@ app.post("/people/delete", (req, res) => {
 // ##################################################################
 app.get("/doors", (req, res) => {
   try {
-    pool.query("SELECT * FROM doors", (err, results) => {
+    pool.query("SELECT * FROM doors", (err, results1) => {
       if (err) throw err;
-      res.render("doors", { doorss: results });
+      pool.query(
+        "SELECT DISTINCT door_group_name FROM door_groups",
+        (err, results2) => {
+          if (err) throw err;
+          res.render("doors", { doorss: results1, door_groups: results2 });
+        }
+      );
     });
   } catch (error) {
     console.log("error!!!!");
@@ -386,22 +392,90 @@ app.post("/people_groups/delete", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/door_groups", (req, res) => {
-  res.render("door_groups", { doorss, peoples });
+  try {
+    pool.query(
+      "SELECT door_groups.door_group_name, door_groups.door_id, doors.door_name, doors.building_name FROM door_groups JOIN doors ON doors.door_id = door_Groups.door_id;",
+      (err, results1) => {
+        if (err) throw err;
+        res.render("door_groups", { door_groups: results1 });
+      }
+    );
+  } catch (error) {
+    console.log("error!!!!");
+  }
 });
 
+app.post("/door_groups", (req, res) => {
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+  }
+  let values = req.body.map((door_groups) => [
+    door_groups.door_id,
+    door_groups.door_group_name,
+  ]);
+  console.log(values);
+  // console.log(req.body);
+  try {
+    // return
+    let query = "INSERT INTO door_groups( door_id, door_group_name) VALUES ?";
+    pool.query(query, [values], (err) => {
+      if (err) {
+        console.log(err);
+        res.send("already row with that group and door combo  ");
+        return;
+        // res.alert('already a door with that ID ');
+      } else {
+        // console.log(
+        //   `added ${req.body}'`
+        // );
+        res.redirect("/doors");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("error!!!!");
+  }
+
+  // res.render("people_groups", { doorss, peoples });
+});
+
+app.post("/door_groups/delete", (req, res) => {
+  const doorToDelete = req.body;
+  if (!Array.isArray(doorToDelete) || doorToDelete.length === 0) {
+    res.status(400).send("Invalid input");
+    return;
+  }
+
+  const values = doorToDelete.map((row) => [row.door_id, row.door_group_name]);
+  const sql = `DELETE FROM door_groups WHERE (door_id,door_group_name) IN (?)`;
+  //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
+  pool.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("An error occurred while deleting the records");
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.status(404).send("Records not found");
+      return;
+    }
+    res.status(200).redirect("/door_groups");
+  });
+});
 // ##################################################################
 // routs for 'permission_groups' page.
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/permission_groups", (req, res) => {
-  res.render("permission_groups", { doorss, peoples });
+  res.render("permission_groups");
 });
 // ##################################################################
 // routs for 'groups permissions' page.
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/groupsPermissions", (req, res) => {
-  res.render("groupsPermissions", { doorss, peoples });
+  res.render("groupsPermissions");
 });
 
 // ##################################################################
