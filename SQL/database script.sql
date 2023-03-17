@@ -12,23 +12,23 @@
 INSERT INTO
   people()
 VALUES(
-    123456789,
-    'Ophir',
-    'Yoram',
+    145654123,
+    'Michael',
+    'Jordan',
     1,
     '159951'
   ),
   (
-    321456987,
-    'Ben',
-    'Rote',
+    204554753,
+    'Lionel',
+    'Messi',
     1,
-    '159951'
+    '123456'
   ),
   (
-    987456321,		
-    'Noam',
-    'Barir',
+    305474889,		
+    'Deigo',
+    'Maradona',
     0,
 	''
   );
