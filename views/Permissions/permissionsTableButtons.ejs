@@ -29,33 +29,33 @@
         </div>
         <div class="row">
           <div class="col form_group_list">
-            <label class="formLable" for="permission_group_list"
+            <label class="formLable" for="permission_set_list"
               >Choose Name</label
             >
             <select
-              name="permission_group_list"
+              name="permission_set_list"
               class="selectFormInput"
-              id="permission_group_list"
+              id="permission_set_list"
               placeholder="Choose Existing Group"
             >
               <!-- add all the  -->
-              <% if(permission_groups) { %> <%
-              permission_groups.forEach(group_name => { %>
+              <% if(permission_sets) { %> <% permission_sets.forEach(group_name
+              => { %>
 
-              <option name="<%=group_name.permission_group_name%>">
-                <%=group_name.permission_group_name%>
+              <option name="<%=group_name.permission_set_name%>">
+                <%=group_name.permission_set_name%>
               </option>
               <% }) %> <% } %>
             </select>
           </div>
           <!-- will be visible if checkbox for add group is checked -->
           <div class="col form_group_hide">
-            <label for="permission_group_name">Name:</label>
+            <label for="permission_set_name">Name:</label>
             <input
               class="formInput"
               type="text"
-              id="permission_group_name"
-              name="permission_group_name"
+              id="permission_set_name"
+              name="permission_set_name"
               placeholder="Insert Group Name"
               minlength="1"
             />

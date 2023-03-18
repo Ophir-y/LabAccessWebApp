@@ -90,18 +90,18 @@ ADD
   PRIMARY KEY (`permission_id`);
 
 
--- Permission_Groups table #########################################################################
-CREATE TABLE `Permission_Groups`(
+-- permission_sets table #########################################################################
+CREATE TABLE `permission_sets`(
     `permission_id` BIGINT NOT NULL,
 	FOREIGN KEY (`permission_id`)
 		REFERENCES `permissions` (`permission_id`)
 		ON DELETE CASCADE,
-    `permission_group_name` VARCHAR(255) NOT NULL
+    `permission_set_name` VARCHAR(255) NOT NULL
   );
 ALTER TABLE
-  `Permission_Groups`
+  `permission_sets`
 ADD
-  PRIMARY KEY (`permission_group_name`, `permission_id`);
+  PRIMARY KEY (`permission_set_name`, `permission_id`);
 
 
 -- Peoples_Permissions_Doors table #########################################################################
@@ -116,9 +116,9 @@ CREATE TABLE `Peoples_Permissions_Doors`(
 	    REFERENCES `Door_Groups` (`door_group_name`)
 	    ON DELETE CASCADE,
 
-    `permission_group_name` VARCHAR(255) NOT NULL,
-    FOREIGN KEY (`permission_group_name`)
-	REFERENCES `Permission_Groups` (`permission_group_name`)
+    `permission_set_name` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`permission_set_name`)
+	REFERENCES `permission_sets` (`permission_set_name`)
 	ON DELETE CASCADE,
     
     `Description` VARCHAR(255) NULL DEFAULT '000000'
@@ -130,7 +130,7 @@ ADD
   PRIMARY KEY (
     `person_group_name`,
     `door_group_name`,
-    `permission_group_name`
+    `permission_set_name`
   );
 
   

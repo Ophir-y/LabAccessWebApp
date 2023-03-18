@@ -196,25 +196,25 @@ DELETE FROM permissions where permissions_id = ...
   
   
   
-  -- permission_groups scripts:#############################################################################
-  -- create permission_groups
-  -- INSERT INTO permission_groups()
+  -- permission_sets scripts:#############################################################################
+  -- create permission_sets
+  -- INSERT INTO permission_sets()
   --     VALUES(
   --         221, -- door_group_id
   --         21, -- door_id
   --         'lab1a permissions group' -- door_group_name
   --     );
 INSERT INTO
-  permission_groups()
+  permission_sets()
 VALUES(
     221,
     21,
     'lab1a permissions group'
   );
--- update permission_groups
+-- update permission_sets
 
--- delete permission_groups
-DELETE FROM permission_groups where permission_group_id = ...
+-- delete permission_sets
+DELETE FROM permission_sets where permission_set_id = ...
   
   
   
@@ -225,8 +225,8 @@ DELETE FROM permission_groups where permission_group_id = ...
   --     VALUES(
   --             321--  person_group_id
   --           112 --  door_group_id
-  --           221 --  permission_group_id
-  --           'lab1a permissions group' --  permission_group_name
+  --           221 --  permission_set_id
+  --           'lab1a permissions group' --  permission_set_name
   --             'lab1a people group'--  person_group_name
   --             'lab1a door group'--  door_group_name
   --     );

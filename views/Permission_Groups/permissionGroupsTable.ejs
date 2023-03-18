@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <!-- table divider -->
-<table class="table searchable sortable" id="permission_group_table">
+<table class="table searchable sortable" id="permission_set_table">
   <!-- header -->
   <thead>
     <tr>
@@ -11,7 +11,7 @@
         <input
           type="text"
           class="tableSearchInput"
-          id="permission_group_name"
+          id="permission_set_name"
           onkeyup="tableSearchFunction(this.id)"
           placeholder="permission Group Name"
         />
@@ -39,11 +39,11 @@
   </thead>
   <!-- table body -->
   <tbody id="container">
-    <% if (permission_groups) { %> <% permission_groups.forEach(function(pg){%>
+    <% if (permission_sets) { %> <% permission_sets.forEach(function(pg){%>
 
     <tr
       onclick="selectRow(this)"
-      id="<%=pg.permission_id%><%=pg.permission_group_name%>"
+      id="<%=pg.permission_id%><%=pg.permission_set_name%>"
     >
       <!-- TDs ########################################################## -->
       <td class="checkbox">
@@ -51,12 +51,12 @@
         <input
           type="checkbox"
           style="pointer-events: none"
-          name="check<%=pg.permission_id%><%=pg.permission_group_name%>"
-          value="<%=pg.permission_id%><%=pg.permission_group_name%>"
-          id="check<%=pg.permission_id%><%=pg.permission_group_name%>"
+          name="check<%=pg.permission_id%><%=pg.permission_set_name%>"
+          value="<%=pg.permission_id%><%=pg.permission_set_name%>"
+          id="check<%=pg.permission_id%><%=pg.permission_set_name%>"
         />
       </td>
-      <td class="permission_group_name"><%=pg.permission_group_name%></td>
+      <td class="permission_set_name"><%=pg.permission_set_name%></td>
       <td class="id"><%=pg.permission_id%></td>
       <td class="permission_type"><%=pg.permission_type%></td>
     </tr>

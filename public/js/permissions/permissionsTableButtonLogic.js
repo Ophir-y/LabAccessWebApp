@@ -51,26 +51,26 @@ function groupSelected() {
   const rows = document.querySelector("tbody").querySelectorAll("tr");
   // get the popup form.
   const groupForm = document.getElementById("new_group_form");
-  let permission_group_name;
+  let permission_set_name;
   // check if the checkbox is checked
   // if so then the user has chosen to create a new group
   // if not then the user will pick from a list of groups.
   if (checkbox_for_group.checked) {
-    permission_group_name = groupForm.permission_group_name.value;
+    permission_set_name = groupForm.permission_set_name.value;
   } else {
-    permission_group_name = groupForm.permission_group_list.value;
+    permission_set_name = groupForm.permission_set_list.value;
   }
 
   const id_list = [];
   for (const row of rows) {
     if (row.querySelector("#check" + `${row.id}`).checked) {
       let permission_id = row.id;
-      let permission_group_row = { permission_id, permission_group_name };
-      id_list.push(permission_group_row);
+      let permission_set_row = { permission_id, permission_set_name };
+      id_list.push(permission_set_row);
     }
   }
   if (id_list.length >= 1) {
-    fetch(`/permission_groups`, {
+    fetch(`/permission_sets`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(id_list),
@@ -111,7 +111,7 @@ function deletepermission() {
 }
 
 function checkgroupName(form) {
-  const formInput = form.permission_group_name.value;
+  const formInput = form.permission_set_name.value;
 
   if (form.new_group_checkbox.checked) {
     if (formInput === "") {

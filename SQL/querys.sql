@@ -9,8 +9,8 @@ FROM
     JOIN Peoples_Permissions_Doors ON People_Groups.person_group_name = Peoples_Permissions_Doors.person_group_name
     JOIN Door_Groups ON Peoples_Permissions_Doors.door_group_id = Door_Groups.door_group_id 
     JOIN Doors ON Door_Groups.door_id = Doors.door_id
-    JOIN Permission_Groups  ON Peoples_Permissions_Doors.permission_group_id = Permission_Groups.permission_group_id
-    JOIN permissions  ON Permission_Groups.permission_id = permissions.permission_id
+    JOIN permission_sets  ON Peoples_Permissions_Doors.permission_set_id = permission_sets.permission_set_id
+    JOIN permissions  ON permission_sets.permission_id = permissions.permission_id
 WHERE 
     Doors.door_id = ["mydoorID"] 
     AND permissions.permission_type = 'access' 

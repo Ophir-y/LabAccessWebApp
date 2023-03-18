@@ -221,12 +221,12 @@ app.get("/permissions", (req, res) => {
     pool.query("SELECT * FROM permissions", (err, results1) => {
       if (err) throw err;
       pool.query(
-        "SELECT DISTINCT permission_group_name FROM permission_groups",
+        "SELECT DISTINCT permission_set_name FROM permission_sets",
         (err, results2) => {
           if (err) throw err;
           res.render("permissions", {
             permissions: results1,
-            permission_groups: results2,
+            permission_sets: results2,
           });
         }
       );
@@ -465,16 +465,16 @@ app.post("/door_groups/delete", (req, res) => {
   });
 });
 // ##################################################################
-// routs for 'permission_groups' page.
+// routs for 'permission_sets' page.
 // includes get and post for page and form logic
 // ##################################################################
-app.get("/permission_groups", (req, res) => {
+app.get("/permission_sets", (req, res) => {
   try {
     pool.query(
-      "SELECT permission_groups.permission_group_name, permission_groups.permission_id, permissions.permission_type FROM permission_groups JOIN permissions ON permissions.permission_id = permission_Groups.permission_id;",
+      "SELECT permission_sets.permission_set_name, permission_sets.permission_id, permissions.permission_type FROM permission_sets JOIN permissions ON permissions.permission_id = permission_sets.permission_id;",
       (err, results1) => {
         if (err) throw err;
-        res.render("permission_groups", { permission_groups: results1 });
+        res.render("permission_sets", { permission_sets: results1 });
       }
     );
   } catch (error) {
@@ -482,18 +482,18 @@ app.get("/permission_groups", (req, res) => {
   }
 });
 
-app.post("/permission_groups", (req, res) => {
+app.post("/permission_sets", (req, res) => {
   if (!req.body) {
     res.send("ERROR: no body was sent!");
   }
-  let values = req.body.map((permission_groups) => [
-    permission_groups.permission_id,
-    permission_groups.permission_group_name,
+  let values = req.body.map((permission_sets) => [
+    permission_sets.permission_id,
+    permission_sets.permission_set_name,
   ]);
   try {
     // return
     let query =
-      "INSERT INTO permission_groups( permission_id, permission_group_name) VALUES ?";
+      "INSERT INTO permission_sets( permission_id, permission_set_name) VALUES ?";
     pool.query(query, [values], (err) => {
       if (err) {
         console.log(err);
@@ -513,7 +513,7 @@ app.post("/permission_groups", (req, res) => {
   }
 });
 
-app.post("/permission_groups/delete", (req, res) => {
+app.post("/permission_sets/delete", (req, res) => {
   const permissionToDelete = req.body;
   if (!Array.isArray(permissionToDelete) || permissionToDelete.length === 0) {
     res.status(400).send("Invalid input");
@@ -522,9 +522,9 @@ app.post("/permission_groups/delete", (req, res) => {
 
   const values = permissionToDelete.map((row) => [
     row.permission_id,
-    row.permission_group_name,
+    row.permission_set_name,
   ]);
-  const sql = `DELETE FROM permission_groups WHERE (permission_id,permission_group_name) IN (?)`;
+  const sql = `DELETE FROM permission_sets WHERE (permission_id,permission_set_name) IN (?)`;
   //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
   pool.query(sql, [values], (err, result) => {
     if (err) {
@@ -537,7 +537,7 @@ app.post("/permission_groups/delete", (req, res) => {
       res.status(404).send("Records not found");
       return;
     }
-    res.status(200).redirect("/permission_groups");
+    res.status(200).redirect("/permission_sets");
   });
 });
 
