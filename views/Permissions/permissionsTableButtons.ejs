@@ -1,0 +1,78 @@
+<!-- @format -->
+
+
+  <div class="mid_button">
+    <button type="button" class="btn btn-danger" id="popupBtn">Group</button>
+    <!-- Pop UP section for group -->
+    <div id="popupContainer">
+      <div id="popup">
+        <h2>Fill out the Groups details</h2>
+        <form
+          id="new_group_form"
+          onsubmit="return checkgroupName(this)"
+          action="/permissions"
+          method="get"
+        >
+          <!-- add group checkbox -->
+          <div class="row">
+            <!-- input hidden to get unchecked value -->
+            <label
+              class="formLable col formCheckboxlable"
+              for="new_group_checkbox"
+              >New Group?</label
+            >
+            <input
+              type="checkbox"
+              id="new_group_checkbox"
+              class="formInput"
+              name="new_group_checkbox"
+            />
+          </div>
+          <div class="row">
+            <div class="col form_group_list">
+              <label class="formLable" for="permission_group_list">Choose Name</label>
+              <select
+                name="permission_group_list"
+                class="selectFormInput"
+                id="permission_group_list"
+                placeholder="Choose Existing Group"
+              >
+                <!-- add all the  -->
+                <% if(permission_groups) { %> <% permission_groups.forEach(group_name => {
+                %>
+
+                <option name="<%=group_name.permission_group_name%>">
+                  <%=group_name.permission_group_name%>
+                </option>
+                <% }) %> <% } %>
+              </select>
+            </div>
+            <!-- will be visible if checkbox for add group is checked -->
+            <div class="col form_group_hide">
+              <label for="permission_group_name">Name:</label>
+              <input
+                class="formInput"
+                type="text"
+                id="permission_group_name"
+                name="permission_group_name"
+                placeholder="Repeat Password"
+                minlength="1"
+              />
+            </div>
+          </div>
+          <button type="submit" id="groupsubmit">Submit</button>
+          <button id="closeBtn">Close</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- delete button -->
+  <div class="mid_button">
+    <form action="/permissions" method="GET">
+      <button type="form" id="delete-button" class="btn btn-danger">
+        DELETE!
+      </button>
+    </form>
+  </div>
+  <script src="js/permissions/permissionsTableButtonLogic.js"></script>
+
