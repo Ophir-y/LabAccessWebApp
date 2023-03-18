@@ -14,7 +14,7 @@ function tableSearchFunction(name) {
   filter = input.value.toUpperCase();
   console.log(filter);
   // get row elements of table
-  table = document.querySelector("#permissions_table");
+  table = document.querySelector("#permissions");
   trs = table.getElementsByTagName("tr");
 
   //go through each row element and do the following:

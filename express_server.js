@@ -218,7 +218,7 @@ app.post("/doors/delete", (req, res) => {
 // ##################################################################
 app.get("/permissions", (req, res) => {
   try {
-    pool.query("SELECT * FROM Permissions_table", (err, results1) => {
+    pool.query("SELECT * FROM permissions", (err, results1) => {
       if (err) throw err;
       pool.query(
         "SELECT DISTINCT permission_group_name FROM permission_groups",
@@ -247,7 +247,7 @@ app.post("/permissions", (req, res) => {
   try {
     // return
     pool.query(
-      `INSERT INTO permissions_table() VALUES(
+      `INSERT INTO permissions() VALUES(
       '${req.body.permission_id}',
       '${req.body.permission_type}',
       '${req.body.initial_date}',
@@ -278,7 +278,7 @@ app.post("/permissions/delete", (req, res) => {
   }
   try {
     pool.query(
-      `DELETE FROM permissions_table WHERE permission_id IN (${permission_ids})`,
+      `DELETE FROM permissions WHERE permission_id IN (${permission_ids})`,
       (error) => {
         if (error) {
           res.send(err);
@@ -471,7 +471,7 @@ app.post("/door_groups/delete", (req, res) => {
 app.get("/permission_groups", (req, res) => {
   try {
     pool.query(
-      "SELECT permission_groups.permission_group_name, permission_groups.permission_id, permissions_table.permission_type FROM permission_groups JOIN permissions_table ON permissions_table.permission_id = permission_Groups.permission_id;",
+      "SELECT permission_groups.permission_group_name, permission_groups.permission_id, permissions.permission_type FROM permission_groups JOIN permissions ON permissions.permission_id = permission_Groups.permission_id;",
       (err, results1) => {
         if (err) throw err;
         res.render("permission_groups", { permission_groups: results1 });

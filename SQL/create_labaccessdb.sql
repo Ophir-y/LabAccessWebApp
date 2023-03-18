@@ -63,8 +63,8 @@ ADD
   PRIMARY KEY (`door_group_name`, `door_id`);
   
   
--- Permissions_table table #########################################################################
-CREATE TABLE `Permissions_table`(
+-- permissions table #########################################################################
+CREATE TABLE `permissions`(
     `permission_id` BIGINT NOT NULL,
     `permission_type` VARCHAR(255) NOT NULL DEFAULT 'access' COMMENT 'permission type:
 
@@ -76,7 +76,7 @@ CREATE TABLE `Permissions_table`(
 
 \"Admin Add Doors\" - permitts adding doors to the system.
 
-\"Admin Add Permissions_table\" - permitts adding permissions to people for specific doors.
+\"Admin Add permissions\" - permitts adding permissions to people for specific doors.
 
 \"Admin Add Admin\" - grants permit to add another admin to a door.',
     `initial_date` DATE NOT NULL COMMENT 'When does the permit start to take effect',
@@ -85,7 +85,7 @@ CREATE TABLE `Permissions_table`(
     `end_time` TIME NOT NULL COMMENT 'When does the permit end every day.'
   );
 ALTER TABLE
-  `Permissions_table`
+  `permissions`
 ADD
   PRIMARY KEY (`permission_id`);
 
@@ -94,7 +94,7 @@ ADD
 CREATE TABLE `Permission_Groups`(
     `permission_id` BIGINT NOT NULL,
 	FOREIGN KEY (`permission_id`)
-		REFERENCES `Permissions_table` (`permission_id`)
+		REFERENCES `permissions` (`permission_id`)
 		ON DELETE CASCADE,
     `permission_group_name` VARCHAR(255) NOT NULL
   );

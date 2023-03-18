@@ -70,20 +70,34 @@ DELETE FROM people_groups where people_group_id = ...
   --         'Ulman', -- building_name
   --         1 -- floor_number
   --     );
-INSERT INTO
-  doors()
+INSERT INTO `labaccessdb`.`doors`
+(`door_id`,
+`door_name`,
+`building_name`,
+`floor_number`)
 VALUES
-(
-12,
-'lab1a door',
-'Ulman',
-1
-),
-(11,
-'lab1b door',
-'Ulman',
-1
-);
+(123,
+'lab1',
+'ulman',
+1),
+(1234,
+'lab1',
+'ulman',
+1),
+(321,
+'lab1',
+'ulman',
+1),
+(32111,
+'lab1',
+'ulman',
+1),
+(221,
+'lab1',
+'ulman',
+1);
+
+
 -- update doors
 -- delete doors
 DELETE FROM doors where door_id = ...  
@@ -123,9 +137,30 @@ DELETE FROM door_groups where door_group_id = ...
   --         '15:05:05' -- end_time
   --     );
 INSERT INTO
-  permissions_table()
+  permissions()
 VALUES(
     21,
+    'Door Access',
+    '2021-07-26',
+    '2021-07-29',
+    '05:05:05',
+    '15:05:05'
+  ),(
+    52,
+    'Door Access',
+    '2021-07-26',
+    '2021-07-29',
+    '05:05:05',
+    '15:05:05'
+  ),(
+    22,
+    'Door Access',
+    '2021-07-26',
+    '2021-07-29',
+    '05:05:05',
+    '15:05:05'
+  ),(
+    4,
     'Door Access',
     '2021-07-26',
     '2021-07-29',
@@ -139,17 +174,25 @@ VALUES(
     '05:05:05',
     '15:05:05'
   ),(
-    111,
+    5,
+    'Door Access',
+    '2021-07-26',
+    '2021-07-29',
+    '05:05:05',
+    '15:05:05'
+  ),(
+    25,
     'Door Access',
     '2021-07-26',
     '2021-07-29',
     '05:05:05',
     '15:05:05'
   );
+  
 -- update permissions
 
 -- delete permissions
-DELETE FROM permissions_table where permissions_id = ...  
+DELETE FROM permissions where permissions_id = ...  
   
   
   
