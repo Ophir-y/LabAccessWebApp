@@ -17,7 +17,6 @@ const pool = mysql.createPool({
 });
 
 // package for creating uniqu IDs
-const { v4: idGet } = require("uuid");
 
 const path = require("path");
 // set public directory
@@ -225,7 +224,10 @@ app.get("/permissions", (req, res) => {
         "SELECT DISTINCT permission_group_name FROM permission_groups",
         (err, results2) => {
           if (err) throw err;
-          res.render("permissions", { permissions: results1, permission_groups: results2 });
+          res.render("permissions", {
+            permissions: results1,
+            permission_groups: results2,
+          });
         }
       );
     });
@@ -313,9 +315,7 @@ app.get("/people_groups", (req, res) => {
       "SELECT people_groups.person_group_name, people_groups.person_id, people.first_name, people.last_name FROM people_groups JOIN People  ON People.person_id = People_Groups.person_id;",
       (err, results1) => {
         if (err) throw err;
-        res.render("people_groups", {
-          people_groups: results1,
-        });
+        res.render("people_groups", { people_groups: results1 });
       }
     );
   } catch (error) {
@@ -327,7 +327,7 @@ app.post("/people_groups", (req, res) => {
   if (!req.body) {
     res.send("ERROR: no body was sent!");
   }
-  // console.log(req.body);
+
   try {
     // return
     let query =
@@ -416,8 +416,6 @@ app.post("/door_groups", (req, res) => {
     door_groups.door_id,
     door_groups.door_group_name,
   ]);
-  console.log(values);
-  // console.log(req.body);
   try {
     // return
     let query = "INSERT INTO door_groups( door_id, door_group_name) VALUES ?";
@@ -482,7 +480,6 @@ app.get("/permission_groups", (req, res) => {
   } catch (error) {
     console.log("error!!!!");
   }
-  res.render("permission_groups");
 });
 
 app.post("/permission_groups", (req, res) => {
@@ -493,11 +490,10 @@ app.post("/permission_groups", (req, res) => {
     permission_groups.permission_id,
     permission_groups.permission_group_name,
   ]);
-  console.log(values);
-  // console.log(req.body);
   try {
     // return
-    let query = "INSERT INTO permission_groups( permission_id, permission_group_name) VALUES ?";
+    let query =
+      "INSERT INTO permission_groups( permission_id, permission_group_name) VALUES ?";
     pool.query(query, [values], (err) => {
       if (err) {
         console.log(err);
@@ -515,7 +511,6 @@ app.post("/permission_groups", (req, res) => {
     console.log(err);
     console.log("error!!!!");
   }
-
 });
 
 app.post("/permission_groups/delete", (req, res) => {
@@ -525,7 +520,10 @@ app.post("/permission_groups/delete", (req, res) => {
     return;
   }
 
-  const values = permissionToDelete.map((row) => [row.permission_id, row.permission_group_name]);
+  const values = permissionToDelete.map((row) => [
+    row.permission_id,
+    row.permission_group_name,
+  ]);
   const sql = `DELETE FROM permission_groups WHERE (permission_id,permission_group_name) IN (?)`;
   //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
   pool.query(sql, [values], (err, result) => {
@@ -542,9 +540,6 @@ app.post("/permission_groups/delete", (req, res) => {
     res.status(200).redirect("/permission_groups");
   });
 });
-
-
-
 
 // ##################################################################
 // routs for 'groups permissions' page.

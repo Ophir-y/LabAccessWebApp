@@ -14,7 +14,7 @@ function tableSearchFunction(name) {
   input = document.querySelector("#" + `${name}`);
   filter = input.value.toUpperCase();
   // get row elements of table
-  table = document.querySelector("#permssion_group_table");
+  table = document.querySelector("#permission_group_table");
   trs = table.getElementsByTagName("tr");
 
   //go through each row element and do the following:
@@ -29,7 +29,7 @@ function tableSearchFunction(name) {
       // or: if we are searching names check if the name exists in the rows below
       if (!(!filter || filter.length === 0)) {
         if (
-          name === "permssion_group_name" ||
+          name === "permission_group_name" ||
           name === "id" ||
           name === "permission_type"
         ) {

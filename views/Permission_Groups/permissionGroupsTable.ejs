@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <!-- table divider -->
-<table class="table searchable sortable" id="permssion_group_table">
+<table class="table searchable sortable" id="permission_group_table">
   <!-- header -->
   <thead>
     <tr>
@@ -11,9 +11,9 @@
         <input
           type="text"
           class="tableSearchInput"
-          id="permssion_group_name"
+          id="permission_group_name"
           onkeyup="tableSearchFunction(this.id)"
-          placeholder="permssion Group Name"
+          placeholder="permission Group Name"
         />
       </th>
       <th scope="col">
@@ -41,25 +41,27 @@
   <tbody id="container">
     <% if (permission_groups) { %> <% permission_groups.forEach(function(pg){%>
 
-    <tr onclick="selectRow(this)" id="<%=pg.permssion_id%><%=pg.permssion_group_name%>">
+    <tr
+      onclick="selectRow(this)"
+      id="<%=pg.permission_id%><%=pg.permission_group_name%>"
+    >
       <!-- TDs ########################################################## -->
       <td class="checkbox">
         <!-- style="pointer-events: none;" makes it so the checkbox doesnt click itself -->
         <input
           type="checkbox"
           style="pointer-events: none"
-          name="check<%=pg.permssion_id%><%=pg.permssion_group_name%>"
-          value="<%=pg.permssion_id%><%=pg.permssion_group_name%>"
-          id="check<%=pg.permssion_id%><%=pg.permssion_group_name%>"
+          name="check<%=pg.permission_id%><%=pg.permission_group_name%>"
+          value="<%=pg.permission_id%><%=pg.permission_group_name%>"
+          id="check<%=pg.permission_id%><%=pg.permission_group_name%>"
         />
       </td>
-      <td class="permssion_group_name"><%=pg.permssion_group_name%></td>
-      <td class="id"><%=pg.permssion_id%></td>
-      <td class="permission_type"><%=pg.permssion_name%></td>
-      <td class="building_name"><%=pg.building_name%></td>
+      <td class="permission_group_name"><%=pg.permission_group_name%></td>
+      <td class="id"><%=pg.permission_id%></td>
+      <td class="permission_type"><%=pg.permission_type%></td>
     </tr>
 
     <% }) %> <% } %>
-    <script src="js/permssionGroups/permssionGroupTableLogic.js"></script>
+    <script src="js/permissionGroups/permissionGroupTableLogic.js"></script>
   </tbody>
 </table>
