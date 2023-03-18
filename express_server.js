@@ -497,7 +497,7 @@ app.post("/permission_sets", (req, res) => {
     pool.query(query, [values], (err) => {
       if (err) {
         console.log(err);
-        res.send("already row with that group and permission combo  ");
+        res.send("already row with that Set and permission combo  ");
         return;
         // res.alert('already a permission with that ID ');
       } else {

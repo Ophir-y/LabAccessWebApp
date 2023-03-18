@@ -11,11 +11,11 @@ deleteButton.addEventListener("click", (event) => {
   if (!confirmed) {
     event.preventDefault();
   } else {
-    deletepermissionGroupRow();
+    deletepermissionsetRow();
   }
 });
 
-function deletepermissionGroupRow() {
+function deletepermissionsetRow() {
   const rows = document.querySelector("tbody").querySelectorAll("tr");
   const id_list = [];
   for (const row of rows) {

@@ -5,7 +5,7 @@
   <!-- Pop UP section for group -->
   <div id="popupContainer">
     <div id="popup">
-      <h2>Fill out the Groups details</h2>
+      <h2>Fill out the Sets details</h2>
       <form
         id="new_group_form"
         onsubmit="return checkgroupName(this)"
@@ -18,7 +18,7 @@
           <label
             class="formLable col formCheckboxlable"
             for="new_group_checkbox"
-            >New Group?</label
+            >New Set?</label
           >
           <input
             type="checkbox"
@@ -39,8 +39,8 @@
               placeholder="Choose Existing Group"
             >
               <!-- add all the  -->
-              <% if(permission_sets) { %> <% permission_sets.forEach(group_name
-              => { %>
+              <% if(permission_sets) { %>
+              <%permission_sets.forEach(group_name=>{%>
 
               <option name="<%=group_name.permission_set_name%>">
                 <%=group_name.permission_set_name%>
@@ -56,7 +56,7 @@
               type="text"
               id="permission_set_name"
               name="permission_set_name"
-              placeholder="Insert Group Name"
+              placeholder="Insert Set Name"
               minlength="1"
             />
           </div>
