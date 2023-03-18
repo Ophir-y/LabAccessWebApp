@@ -3,8 +3,6 @@
 const express = require("express");
 const app = express();
 
-var methodOverride = require("method-override");
-
 // set port number
 const port = 1231;
 // ##################################################################
@@ -24,8 +22,7 @@ const { v4: idGet } = require("uuid");
 const path = require("path");
 // set public directory
 app.use(express.static(path.join(__dirname, "/public")));
-// set method override
-app.use(methodOverride("_method"));
+
 // set views as the views directory.
 app.set("views", path.join(__dirname, "/views"));
 // set view engine to ejs.
