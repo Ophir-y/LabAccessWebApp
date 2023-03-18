@@ -5,6 +5,17 @@
 <%- include('../partials/navbar') %>
 
 <!-- main page structure -->
+<div class="text-center mainContainer">
+  <div class="row header">
+    <h1>Permission Groups</h1>
+  </div>
+  <div class="row">
+    <!-- Table Select Buttons -->
+    <div class="col col-lg-2"><%- include('permissionGroupsButtons') %></div>
+
+    <!-- TABLE -->
+    <div class="col col-lg-10"><%- include('permissionGroupsTable', permission_groups) %></div>
+  </div>
 
   <!-- footer -->
   <%- include('../partials/footer') %>

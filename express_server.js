@@ -222,9 +222,15 @@ app.post("/doors/delete", (req, res) => {
 // ##################################################################
 app.get("/permissions", (req, res) => {
   try {
-    pool.query("SELECT * FROM Permissions_table", (err, results) => {
+    pool.query("SELECT * FROM Permissions_table", (err, results1) => {
       if (err) throw err;
-      res.render("permissions", { permissions: results });
+      pool.query(
+        "SELECT DISTINCT permission_group_name FROM permission_groups",
+        (err, results2) => {
+          if (err) throw err;
+          res.render("permissions", { permissions: results1, permission_groups: results2 });
+        }
+      );
     });
   } catch (error) {
     console.log("error!!!!");
@@ -468,8 +474,81 @@ app.post("/door_groups/delete", (req, res) => {
 // includes get and post for page and form logic
 // ##################################################################
 app.get("/permission_groups", (req, res) => {
+  try {
+    pool.query(
+      "SELECT permission_groups.permission_group_name, permission_groups.permission_id, permissions_table.permission_type FROM permission_groups JOIN permissions_table ON permissions_table.permission_id = permission_Groups.permission_id;",
+      (err, results1) => {
+        if (err) throw err;
+        res.render("permission_groups", { permission_groups: results1 });
+      }
+    );
+  } catch (error) {
+    console.log("error!!!!");
+  }
   res.render("permission_groups");
 });
+
+app.post("/permission_groups", (req, res) => {
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+  }
+  let values = req.body.map((permission_groups) => [
+    permission_groups.permission_id,
+    permission_groups.permission_group_name,
+  ]);
+  console.log(values);
+  // console.log(req.body);
+  try {
+    // return
+    let query = "INSERT INTO permission_groups( permission_id, permission_group_name) VALUES ?";
+    pool.query(query, [values], (err) => {
+      if (err) {
+        console.log(err);
+        res.send("already row with that group and permission combo  ");
+        return;
+        // res.alert('already a permission with that ID ');
+      } else {
+        // console.log(
+        //   `added ${req.body}'`
+        // );
+        res.redirect("/permissions");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("error!!!!");
+  }
+
+});
+
+app.post("/permission_groups/delete", (req, res) => {
+  const permissionToDelete = req.body;
+  if (!Array.isArray(permissionToDelete) || permissionToDelete.length === 0) {
+    res.status(400).send("Invalid input");
+    return;
+  }
+
+  const values = permissionToDelete.map((row) => [row.permission_id, row.permission_group_name]);
+  const sql = `DELETE FROM permission_groups WHERE (permission_id,permission_group_name) IN (?)`;
+  //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
+  pool.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("An error occurred while deleting the records");
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.status(404).send("Records not found");
+      return;
+    }
+    res.status(200).redirect("/permission_groups");
+  });
+});
+
+
+
+
 // ##################################################################
 // routs for 'groups permissions' page.
 // includes get and post for page and form logic
