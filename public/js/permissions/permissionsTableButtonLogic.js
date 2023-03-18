@@ -97,7 +97,7 @@ function deletepermission() {
   const rows = document.querySelector("tbody").querySelectorAll("tr");
   const id_list = [];
   for (const row of rows) {
-    if (row.querySelector("#check" + `${row.id}`).checked) {
+    if (row.querySelector("input").checked) {
       id_list.push(row.id);
     }
   }

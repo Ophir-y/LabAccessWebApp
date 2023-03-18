@@ -1,0 +1,80 @@
+<!-- @format -->
+
+<!-- 1 of 2 -->
+<!-- form divider -->
+
+<form action="/Assign_Permissions" method="post" id="formSide-Div">
+  <h2 class="formLable">Assign New Permission</h2>
+  <div class="form">
+    <div class="row">
+      <label class="formLable" for="people_group">Choose People Group</label>
+      <Select
+        class="formInput"
+        name="person_group_name"
+        id="people_group"
+        placeholder="Choose Group Name"
+        required
+      >
+        <option value="">--Group Name--</option>
+        <% if(people_groups) {%> <%people_groups.forEach(group_name => {%>
+
+        <option name="<%=group_name.person_group_name%>">
+          <%=group_name.person_group_name%>
+        </option>
+        <% }) %> <% } %>
+      </Select>
+    </div>
+    <div class="row">
+      <label class="formLable" for="door_group">Choose Door Group</label>
+      <Select
+        class="formInput"
+        name="door_group_name"
+        id="door_group"
+        placeholder="Choose Group Name"
+        required
+      >
+        <option value="">--Group Name--</option>
+        <% if(door_groups) {%> <%door_groups.forEach(group_name => {%>
+
+        <option name="<%=group_name.door_group_name%>">
+          <%=group_name.door_group_name%>
+        </option>
+        <% }) %> <% } %>
+      </Select>
+    </div>
+    <div class="row">
+      <label class="formLable" for="Permission_Set">
+        Choose Permission Set
+      </label>
+      <Select
+        class="formInput"
+        name="permission_set_name"
+        id="Permission_Set"
+        placeholder="Choose Group Name"
+        required
+      >
+        <option value="">--Group Name--</option>
+        <% if(permission_Sets) {%> <%permission_Sets.forEach(group_name => {%>
+        <option name="<%=group_name.permission_set_name%>">
+          <%=group_name.permission_set_name%>
+        </option>
+        <% }) %> <% } %>
+      </Select>
+    </div>
+    <div class="row">
+      <label class="formLable" for="Description_form"
+        >Please describe the Assignment:</label
+      >
+      <textarea
+        id="Description_form"
+        name="Description"
+        rows="10"
+        cols="40"
+        placeholder="Please describe here:"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <button type="submit" class="formButton">Press To Submit</button>
+</form>

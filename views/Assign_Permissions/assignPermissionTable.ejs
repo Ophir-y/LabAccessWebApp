@@ -1,0 +1,76 @@
+<!-- @format -->
+
+<!-- table divider -->
+
+<table class="table searchable sortable" id="AssignedPermissions">
+  <thead>
+    <tr>
+      <th class="table_checkbox" scope="col"></th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="people_group"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="People Groups"
+        />
+      </th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="door_groups"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Door Groups"
+        />
+      </th>
+      <!-- string -->
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="permission_Sets"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Permission Sets"
+        />
+        <!-- string -->
+      </th>
+
+      <th scope="col">
+        <input
+          type="text"
+          class="tableSearchInput"
+          id="Description"
+          onkeyup="tableSearchFunction(this.id)"
+          placeholder="Description"
+        />
+      </th>
+    </tr>
+  </thead>
+  <tbody id="container">
+    <% if (assined_permissions) {%>
+    <%assined_permissions.forEach(function(ap){%>
+    <tr onclick="selectRow(this)">
+      <!-- TDs ########################################################## -->
+      <td class="checkbox">
+        <!-- style="pointer-events: none;" makes it so the checkbox doesnt click itself -->
+        <input
+          type="checkbox"
+          class="assigncheckbox"
+          style="pointer-events: none"
+        />
+      </td>
+      <td class="people_groups"><%=ap.person_group_name%></td>
+      <td class="door_groups"><%=ap.door_group_name%></td>
+      <td class="permission_Sets"><%=ap.permission_set_name%></td>
+      <td class="Description"><%=ap.Description%></td>
+    </tr>
+    <%});%> <%}%>
+    <script
+      type="text/javascript"
+      src="js/AssignedPermissions/AssignedPermissionTableLogic.js"
+    ></script>
+  </tbody>
+</table>

@@ -90,9 +90,6 @@ app.post("/people", (req, res) => {
           return;
           // res.alert('already a person with that ID ');
         } else {
-          console.log(
-            `added ${req.body.person_id},'${req.body.first_name}','${req.body.last_name}',${req.body.admin_system_access},'${req.body.admin_password}'`
-          );
           res.redirect("/people");
         }
       }
@@ -545,8 +542,113 @@ app.post("/permission_sets/delete", (req, res) => {
 // routs for 'groups permissions' page.
 // includes get and post for page and form logic
 // ##################################################################
-app.get("/groupsPermissions", (req, res) => {
-  res.render("groupsPermissions");
+app.get("/Assign_Permissions", (req, res) => {
+  try {
+    pool.query(
+      "SELECT * FROM peoples_permissions_doors",
+      (err, assined_permissions) => {
+        if (err) throw err;
+        pool.query(
+          "SELECT DISTINCT person_group_name FROM people_groups",
+          (err, people_groups) => {
+            if (err) throw err;
+            pool.query(
+              "SELECT DISTINCT door_group_name FROM door_groups",
+              (err, door_groups) => {
+                if (err) throw err;
+                pool.query(
+                  "SELECT DISTINCT permission_set_name FROM permission_sets",
+                  (err, permission_Sets) => {
+                    if (err) throw err;
+                    res.render("Assign_Permissions", {
+                      assined_permissions: assined_permissions,
+                      people_groups: people_groups,
+                      door_groups: door_groups,
+                      permission_Sets: permission_Sets,
+                    });
+                  }
+                );
+              }
+            );
+          }
+        );
+        if (err) throw err;
+      }
+    );
+  } catch (error) {
+    console.log("error!!!!");
+  }
+});
+
+app.post("/Assign_Permissions", (req, res) => {
+  if (!req.body) {
+    res.send("ERROR: no body was sent!");
+  }
+  let Assign_permission_get = [req.body];
+  try {
+    // return
+    let query =
+      "INSERT INTO peoples_permissions_doors (`person_group_name`,`door_group_name`,`permission_set_name`,`Description`) VALUES ?";
+    pool.query(
+      query,
+      [
+        Assign_permission_get.map((people_groups) => [
+          people_groups.person_group_name,
+          people_groups.door_group_name,
+          people_groups.permission_set_name,
+          people_groups.Description,
+        ]),
+      ],
+      (err) => {
+        if (err) {
+          console.log(err);
+          res.send("already row with that group and person combo  ");
+          return;
+          // res.alert('already a person with that ID ');
+        } else {
+          // console.log(
+          //   `added ${req.body}'`
+          // );
+          res.redirect("/Assign_Permissions");
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    console.log("error!!!!");
+  }
+});
+
+app.post("/Assign_Permissions/delete", (req, res) => {
+  const AssignpermissionToDelete = req.body;
+  if (
+    !Array.isArray(AssignpermissionToDelete) ||
+    AssignpermissionToDelete.length === 0
+  ) {
+    res.status(400).send("Invalid input");
+    return;
+  }
+
+  const values = AssignpermissionToDelete.map((row) => [
+    row.person_group_name,
+    row.door_group_name,
+    row.permission_set_name,
+  ]);
+  const sql = `DELETE FROM peoples_permissions_doors WHERE (person_group_name,door_group_name,permission_set_name) IN (?)`;
+  //the values has to be in [] so that it can be identified as an array of double values and not as one long array.
+  pool.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("An error occurred while deleting the records");
+      return;
+    }
+
+    if (result.affectedRows === 0) {
+      res.status(404).send("Records not found");
+      return;
+    }
+    res.status(200).redirect("/Assign_Permissions");
+  });
 });
 
 // ##################################################################
@@ -559,8 +661,24 @@ app.get("/GETLIST", (req, res) => {
   console.log(`Request received from ID ${id}`);
 
   // Retrieve only the id, firstname, and lastname fields
-  const query = "SELECT person_id FROM people";
-
+  // const query = "SELECT person_id FROM people";
+  const query = ` SELECT DISTINCT
+                    People.person_id, 
+                    permissions.initial_date,
+                    permissions.expiry_date,
+                    permissions.start_time, 
+                    permissions.end_time 
+                  FROM 
+                    People People 
+                    JOIN People_Groups  ON People.person_id = People_Groups.person_id
+                    JOIN Peoples_Permissions_Doors ON People_Groups.person_group_name = Peoples_Permissions_Doors.person_group_name
+                    JOIN Door_Groups ON Peoples_Permissions_Doors.door_group_name  = Door_Groups.door_group_name 
+                    JOIN Doors ON Door_Groups.door_id = Doors.door_id
+                    JOIN permission_sets  ON Peoples_Permissions_Doors.permission_set_name  = permission_sets.permission_set_name 
+                    JOIN permissions  ON permission_sets.permission_id = permissions.permission_id
+                  WHERE 
+                    Doors.door_id = '${id}' 
+                    AND permissions.permission_type = 'Door Access'`;
   // Execute the query using the connection pool
   pool.query(query, (error, results) => {
     if (error) {

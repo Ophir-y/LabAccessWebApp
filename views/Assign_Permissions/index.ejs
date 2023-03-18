@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <!-- Header -->
 <%- include('../partials/head') %>
 
@@ -7,23 +9,20 @@
 <!-- main page structure -->
 <div class="container text-center">
   <div class="row header">
-    <h1>Permissions</h1>
+    <h1>Assigned Permissions</h1>
   </div>
   <div class="row">
     <!-- FORM -->
-    <div class="col col-lg-2" id="tableSide-Div">
-      <%- include('../Permissions/permissionForm') %>
+    <div class="col col-lg-3" id="tableSide-Div">
+      <%- include('assignpermissionForm') %>
     </div>
     <!-- Table Select Buttons -->
-
-    <!-- People TABLE -->
-
-    <div class="col col-lg-5" id="tableSide-Div">
-      <%- include('../people/peopleTable') %>
+    <div class="col col-lg-1" id="tableSide-Div">
+      <%- include('assignpermissionsTableButtons') %>
     </div>
-    <!-- Door TABLE -->
-    <div class="col col-lg-5" id="tableSide-Div">
-      <%- include('../doors/doorTable') %>
+    <!-- TABLE -->
+    <div class="col col-lg-8" id="tableSide-Div">
+      <%- include('assignpermissionTable') %>
     </div>
   </div>
   <!-- footer -->

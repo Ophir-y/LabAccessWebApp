@@ -105,6 +105,11 @@ tbody tr:hover {
   height: 100vh;
   /* padding-left: 2vw; */
 }
+#Description_form {
+  width: 80%;
+  height: 150px;
+  resize: vertical;
+}
 .formLable {
   text-align: left;
 }
