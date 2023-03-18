@@ -1,14 +1,10 @@
 {
   "dependencies": {
-    "axios": "^1.2.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "method-override": "^3.0.0",
-    "mysql": "^2.18.1",
     "mysql2": "^3.1.2",
     "nodemon": "^2.0.20",
-    "util": "^0.12.5",
-    "uuid": "^9.0.0"
+    "util": "^0.12.5"
   },
   "name": "labaccesswebapp",
   "description": "This Repo is for the Website we are building for the Lab Access project",
