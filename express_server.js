@@ -247,8 +247,6 @@ app.post("/permissions", (req, res) => {
       `INSERT INTO permissions() VALUES(
       '${req.body.permission_id}',
       '${req.body.permission_type}',
-      '${req.body.initial_date}',
-      '${req.body.expiry_date}',
       '${req.body.start_time}',
       '${req.body.end_time}')`,
       (err) => {
@@ -585,10 +583,12 @@ app.post("/Assign_Permissions", (req, res) => {
     res.send("ERROR: no body was sent!");
   }
   let Assign_permission_get = [req.body];
+  console.log(Assign_permission_get);
+
   try {
     // return
     let query =
-      "INSERT INTO peoples_permissions_doors (`person_group_name`,`door_group_name`,`permission_set_name`,`Description`) VALUES ?";
+      "INSERT INTO peoples_permissions_doors (`person_group_name`,`door_group_name`,`permission_set_name`,`Description`,`initial_date`, `expiry_date`) VALUES ?";
     pool.query(
       query,
       [
@@ -597,6 +597,8 @@ app.post("/Assign_Permissions", (req, res) => {
           people_groups.door_group_name,
           people_groups.permission_set_name,
           people_groups.Description,
+          people_groups.initial_date,
+          people_groups.expiry_date,
         ]),
       ],
       (err) => {
@@ -664,8 +666,6 @@ app.get("/GETLIST", (req, res) => {
   // const query = "SELECT person_id FROM people";
   const query = ` SELECT DISTINCT
                     People.person_id, 
-                    permissions.initial_date,
-                    permissions.expiry_date,
                     permissions.start_time, 
                     permissions.end_time 
                   FROM 
@@ -687,7 +687,9 @@ app.get("/GETLIST", (req, res) => {
       return;
     }
     // Send the results to the ESP32 board as a JSON array
+
     res.json(results);
+
   });
 });
 // ##################################################################

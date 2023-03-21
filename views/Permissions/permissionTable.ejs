@@ -18,26 +18,7 @@
           placeholder="Type"
         />
       </th>
-      <!-- Date -->
-      <th scope="col">
-        <input
-          type="text"
-          class="tableSearchInput"
-          id="initial_date_search"
-          onkeyup="tableSearchFunction(this.id)"
-          placeholder="Start"
-        />
-      </th>
-      <!-- Date -->
-      <th scope="col">
-        <input
-          type="text"
-          class="tableSearchInput"
-          id="expiry_date_search"
-          onkeyup="tableSearchFunction(this.id)"
-          placeholder="Expiry"
-        />
-      </th>
+
       <!-- Time -->
       <th scope="col">
         <input
@@ -76,8 +57,6 @@
       </td>
       <td class="id"><%=p.permission_id%></td>
       <td class="permission_type_search"><%=p.permission_type%></td>
-      <td class="initial_date_search"><%=p.initial_date%></td>
-      <td class="expiry_date_search"><%=p.expiry_date%></td>
       <td class="start_time_search"><%=p.start_time%></td>
       <td class="end_time_search"><%=p.end_time%></td>
     </tr>

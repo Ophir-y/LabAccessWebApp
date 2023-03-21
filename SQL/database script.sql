@@ -32,6 +32,18 @@ VALUES(
     0,
 	''
   );
+-- more 
+(987654321, 'Jane', 'Smith', 1, 'password123'),
+(246801357, 'Bob', 'Johnson', 0, ''),
+(135792468, 'Alice', 'Brown', 1, 'secret'),
+(864209753, 'Mike', 'Davis', 0, ''),
+(975310246, 'Karen', 'Wilson', 1, 'letmein'),
+(456789123, 'Tom', 'Lee', 0, ''),
+(654321987, 'David', 'Clark', 1, 'password1'),
+(741852963, 'Lisa', 'Robinson', 0, ''),
+(258147369, 'Mark', 'Allen', 0, ''),
+(369258147, 'Amy', 'Garcia', 1, 'admin123'),
+(951753846, 'Eric', 'Baker', 0, '');
 -- update person
 
 
@@ -96,7 +108,47 @@ VALUES
 'lab1',
 'ulman',
 1);
+ -- sum more
 
+(123456789, 'Door1', 'BuildingA', 1),
+(987654321, 'Door2', 'BuildingB', 2),
+(246801357, 'Door3', 'BuildingC', 3),
+(135792468, 'Door4', 'BuildingD', 4),
+(864209753, 'Door5', 'BuildingE', 5),
+(975310246, 'Door6', 'BuildingF', 6),
+(456789123, 'Door7', 'BuildingG', 7),
+(654321987, 'Door9', 'BuildingI', 9),
+(741852963, 'Door10', 'BuildingJ', 10),
+(258147369, 'Door11', 'BuildingK', 1),
+(369258147, 'Door12', 'BuildingL', 2),
+(951753846, 'Door13', 'BuildingM', 3),
+(123456780, 'Door14', 'BuildingN', 4),
+(123456781, 'Door15', 'BuildingO', 5),
+(123456782, 'Door16', 'BuildingP', 6),
+(123456783, 'Door17', 'BuildingQ', 7),
+(123456784, 'Door18', 'BuildingR', 8),
+(123456785, 'Door19', 'BuildingS', 9),
+(123456786, 'Door20', 'BuildingT', 10),
+(123456787, 'Door21', 'BuildingU', 1),
+(123456788, 'Door22', 'BuildingV', 2),
+(123456790, 'Door24', 'BuildingX', 4),
+(123456791, 'Door25', 'BuildingY', 5),
+(123456792, 'Door26', 'BuildingZ', 6),
+(123456793, 'Door27', 'BuildingA', 7),
+(123456794, 'Door28', 'BuildingB', 8),
+(123456795, 'Door29', 'BuildingC', 9),
+(123456796, 'Door30', 'BuildingD', 10),
+(123456797, 'Door31', 'BuildingE', 1),
+(123456798, 'Door32', 'BuildingF', 2),
+(123456799, 'Door33', 'BuildingG', 3),
+(123456800, 'Door34', 'BuildingH', 4),
+(123456801, 'Door35', 'BuildingI', 5),
+(123456802, 'Door36', 'BuildingJ', 6),
+(123456803, 'Door37', 'BuildingK', 7),
+(123456804, 'Door38', 'BuildingL', 8),
+(123456805, 'Door39', 'BuildingM', 9),
+(123456806, 'Door40', 'BuildingN', 10),
+(123456807, 'Door41', 'BuildingO', 1);
 
 -- update doors
 -- delete doors

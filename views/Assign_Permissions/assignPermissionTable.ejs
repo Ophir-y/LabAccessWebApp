@@ -47,6 +47,26 @@
           placeholder="Description"
         />
       </th>
+            <!-- Date -->
+            <th scope="col">
+              <input
+                type="text"
+                class="tableSearchInput"
+                id="initial_date_search"
+                onkeyup="tableSearchFunction(this.id)"
+                placeholder="Start"
+              />
+            </th>
+            <!-- Date -->
+            <th scope="col">
+              <input
+                type="text"
+                class="tableSearchInput"
+                id="expiry_date_search"
+                onkeyup="tableSearchFunction(this.id)"
+                placeholder="Expiry"
+              />
+            </th>
     </tr>
   </thead>
   <tbody id="container">
@@ -66,6 +86,8 @@
       <td class="door_groups"><%=ap.door_group_name%></td>
       <td class="permission_Sets"><%=ap.permission_set_name%></td>
       <td class="Description"><%=ap.Description%></td>
+      <td class="initial_date_search"><%=ap.initial_date%></td>
+      <td class="expiry_date_search"><%=ap.expiry_date%></td>
     </tr>
     <%});%> <%}%>
     <script
