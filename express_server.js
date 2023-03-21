@@ -689,7 +689,6 @@ app.get("/GETLIST", (req, res) => {
     // Send the results to the ESP32 board as a JSON array
 
     res.json(results);
-
   });
 });
 // ##################################################################
