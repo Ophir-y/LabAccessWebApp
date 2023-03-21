@@ -74,7 +74,36 @@
         required
       ></textarea>
     </div>
+    <div class="row">
+      <label class="formLable" for="initial_date">Initial Date:</label>
+      <input
+        type="date"
+        class="formInput"
+        name="initial_date"
+        id="initial_date"
+        placeholder="Initial Date"
+        required
+      />
+    </div>
+    <!-- expiry date -->
+    <!-- must be after initial date -->
+    <div class="row">
+      <label class="formLable" for="expiry_date">Expiry Date:</label>
+      <input
+        type="date"
+        class="formInput"
+        name="expiry_date"
+        id="expiry_date"
+        placeholder="Expiry Date"
+        required
+      />
+    </div>
+
   </div>
 
+  <script
+  type="text/javascript"
+  src="js/AssignedPermissions/AssignedPermissionformLogic.js"
+></script>
   <button type="submit" class="formButton">Press To Submit</button>
 </form>

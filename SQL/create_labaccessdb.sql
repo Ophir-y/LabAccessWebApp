@@ -79,8 +79,6 @@ CREATE TABLE `permissions`(
 \"Admin Add permissions\" - permitts adding permissions to people for specific doors.
 
 \"Admin Add Admin\" - grants permit to add another admin to a door.',
-    `initial_date` DATE NOT NULL COMMENT 'When does the permit start to take effect',
-    `expiry_date` DATE NOT NULL COMMENT 'When does the permit expire',
     `start_time` TIME NOT NULL COMMENT 'When does the permit start to take effect every day.',
     `end_time` TIME NOT NULL COMMENT 'When does the permit end every day.'
   );
@@ -121,7 +119,9 @@ CREATE TABLE `Peoples_Permissions_Doors`(
 	REFERENCES `permission_sets` (`permission_set_name`)
 	ON DELETE CASCADE,
     
-    `Description` VARCHAR(255) NULL DEFAULT '000000'
+    `Description` VARCHAR(255) NULL DEFAULT '000000',
+    `initial_date` DATE NOT NULL COMMENT 'When does the permit start to take effect',
+    `expiry_date` DATE NOT NULL COMMENT 'When does the permit expire'
 
   );
 ALTER TABLE
