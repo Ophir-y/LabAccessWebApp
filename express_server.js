@@ -662,6 +662,12 @@ app.get("/GETLIST", (req, res) => {
   // Print the ID to the console
   console.log(`Request received from ID ${id}`);
 
+// Get the current date
+const currentDate = new Date().toISOString().slice(0, 10);
+
+console.log(`currentDate ${currentDate}`);
+
+
   // Retrieve only the id, firstname, and lastname fields
   // const query = "SELECT person_id FROM people";
   const query = ` SELECT DISTINCT
@@ -678,7 +684,10 @@ app.get("/GETLIST", (req, res) => {
                     JOIN permissions  ON permission_sets.permission_id = permissions.permission_id
                   WHERE 
                     Doors.door_id = '${id}' 
-                    AND permissions.permission_type = 'Door Access'`;
+                    AND permissions.permission_type = 'Door Access'
+                    AND '${currentDate}' BETWEEN peoples_permissions_doors.initial_date AND peoples_permissions_doors.expiry_date`;
+                  
+
   // Execute the query using the connection pool
   pool.query(query, (error, results) => {
     if (error) {
@@ -687,7 +696,6 @@ app.get("/GETLIST", (req, res) => {
       return;
     }
     // Send the results to the ESP32 board as a JSON array
-
     res.json(results);
 
   });
@@ -705,7 +713,10 @@ app.post("/ESP32POSTLOG", (req, res) => {
 // respond with server time
 // ##################################################################
 app.get("/time", (req, res) => {
+
   const timestamp = Math.floor(Date.now() / 1000);
+
+  // const timestamp = Math.floor(Date.now() / 1000);
   res.json({ timestamp });
 });
 // ##################################################################

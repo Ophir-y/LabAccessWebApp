@@ -1,0 +1,68 @@
+<!-- @format -->
+
+<!-- Header -->
+<%- include('../partials/head') %>
+
+<!-- Navbar -->
+<%- include('../partials/navbar') %>
+
+<!-- main page structure -->
+<div class="text-center mainContainer">
+  <div class="row header">
+    <h1>Permissions</h1>
+  </div>
+  <div class="row">
+    <!-- FORM -->
+    <div class="col col-lg-3" id="tableSide-Div">
+      <%- include('permissionForm') %>
+    </div>
+
+     <!-- Table Select Buttons -->
+    <div class="col col-lg-1">
+      <%- include('permissionsTableButtons') %>
+    </div>
+
+    <!-- Permission TABLE -->
+
+    <div class="col col-lg-8" id="tableSide-Div">
+      <%- include('permissionTable') %>
+    </div>
+  </div>
+  <!-- footer -->
+  <%- include('../partials/footer') %>
+</div>
+
+<!-- <html>
+<head>
+  <title>Send JSON to ESP32</title>
+</head>
+<body>
+  <h1>Send JSON to ESP32</h1>
+  <button onclick="sendJSON()">Send JSON</button>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html> -->
+
+<!-- function sendJSON() {
+  // Set up the data to send
+  var data = { 'foo': 'bar' };
+  
+  // Set up the ESP32 URL
+  var url = 'http://192.168.1.100/json';
+  
+  // Send the request with the JSON payload
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    success: function(response) {
+      console.log('Success: ', response);
+    },
+    error: function(xhr, status, error) {
+      console.error('Error: ', error);
+    }
+  });
+} -->
