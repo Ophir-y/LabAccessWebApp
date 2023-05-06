@@ -401,7 +401,7 @@ app.post("/people_groups/delete", (req, res) => {
 app.get("/door_groups", (req, res) => {
   try {
     pool.query(
-      "SELECT door_groups.door_group_name, door_groups.door_id, doors.door_name, doors.building_name FROM door_groups JOIN doors ON doors.door_id = door_Groups.door_id;",
+      "SELECT door_groups.door_group_name, door_groups.door_id, doors.door_name, doors.building_name FROM door_groups JOIN doors ON doors.door_id = door_groups.door_id;",
       (err, results1) => {
         if (err) throw err;
         res.render("door_groups", { door_groups: results1 });
