@@ -1,10 +1,19 @@
 /** @format */
-
+const https = require("https");
 const express = require("express");
+const fs = require("fs");
 const app = express();
 
+// use: openssl req -nodes -new -x509 -keyout server.key -out server.cert
+// to create server.cert and server key.
+// use on linux terminal.
+const options = {
+  key: fs.readFileSync("server.key"),
+  cert: fs.readFileSync("server.cert"),
+};
 // set port number
-const port = 1231;
+// const port = 443;
+const port = 1500;
 // ##################################################################
 // connect to database
 // ##################################################################
@@ -307,7 +316,7 @@ app.post("/permissions/delete", (req, res) => {
 app.get("/people_groups", (req, res) => {
   try {
     pool.query(
-      "SELECT people_groups.person_group_name, people_groups.person_id, people.first_name, people.last_name FROM people_groups JOIN People  ON People.person_id = People_Groups.person_id;",
+      "SELECT people_groups.person_group_name, people_groups.person_id, people.first_name, people.last_name FROM people_groups JOIN people  ON people.person_id = people_groups.person_id;",
       (err, results1) => {
         if (err) throw err;
         res.render("people_groups", { people_groups: results1 });
@@ -588,7 +597,7 @@ app.post("/Assign_Permissions", (req, res) => {
   try {
     // return
     let query =
-      "INSERT INTO peoples_permissions_doors (`person_group_name`,`door_group_name`,`permission_set_name`,`Description`,`initial_date`, `expiry_date`) VALUES ?";
+      "INSERT INTO peoples_permissions_doors (`person_group_name`,`door_group_name`,`permission_set_name`,`description`,`initial_date`, `expiry_date`) VALUES ?";
     pool.query(
       query,
       [
@@ -596,7 +605,7 @@ app.post("/Assign_Permissions", (req, res) => {
           people_groups.person_group_name,
           people_groups.door_group_name,
           people_groups.permission_set_name,
-          people_groups.Description,
+          people_groups.description,
           people_groups.initial_date,
           people_groups.expiry_date,
         ]),
@@ -665,19 +674,19 @@ app.get("/GETLIST", (req, res) => {
   // Retrieve only the id, firstname, and lastname fields
   // const query = "SELECT person_id FROM people";
   const query = ` SELECT DISTINCT
-                    People.person_id, 
+                    people.person_id, 
                     permissions.start_time, 
                     permissions.end_time 
                   FROM 
-                    People People 
-                    JOIN People_Groups  ON People.person_id = People_Groups.person_id
-                    JOIN Peoples_Permissions_Doors ON People_Groups.person_group_name = Peoples_Permissions_Doors.person_group_name
-                    JOIN Door_Groups ON Peoples_Permissions_Doors.door_group_name  = Door_Groups.door_group_name 
-                    JOIN Doors ON Door_Groups.door_id = Doors.door_id
-                    JOIN permission_sets  ON Peoples_Permissions_Doors.permission_set_name  = permission_sets.permission_set_name 
+                    people people 
+                    JOIN people_groups  ON people.person_id = people_groups.person_id
+                    JOIN peoples_permissions_doors ON people_groups.person_group_name = peoples_permissions_doors.person_group_name
+                    JOIN door_groups ON peoples_permissions_doors.door_group_name  = door_groups.door_group_name 
+                    JOIN doors ON door_groups.door_id = doors.door_id
+                    JOIN permission_sets  ON peoples_permissions_doors.permission_set_name  = permission_sets.permission_set_name 
                     JOIN permissions  ON permission_sets.permission_id = permissions.permission_id
                   WHERE 
-                    Doors.door_id = '${id}' 
+                    doors.door_id = '${id}' 
                     AND permissions.permission_type = 'Door Access'`;
   // Execute the query using the connection pool
   pool.query(query, (error, results) => {
@@ -716,6 +725,10 @@ app.get("*", (req, res) => {
 // ##################################################################
 // listen logic
 // ##################################################################
-app.listen(port, () => {
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
+
+https.createServer(options, app).listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

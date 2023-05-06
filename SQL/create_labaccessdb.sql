@@ -8,8 +8,8 @@ USE labaccessdb;
 -- to delete use following command: 
 -- DROP database labaccessdb;
 
--- People table #########################################################################
-CREATE TABLE `People`(
+-- people table #########################################################################
+CREATE TABLE `people`(
     `person_id` BIGINT NOT NULL,
     `first_name` VARCHAR(255) NOT NULL,
     `last_name` VARCHAR(255) NOT NULL,
@@ -17,48 +17,48 @@ CREATE TABLE `People`(
     `admin_password` VARCHAR(255) NULL COMMENT 'Only active if person is an admin'
   );
 ALTER TABLE
-  `People`
+  `people`
 ADD
   PRIMARY KEY (`person_id`);
 
 
--- People_Groups table #########################################################################
-CREATE TABLE `People_Groups`(
+-- people_groups table #########################################################################
+CREATE TABLE `people_groups`(
     `person_id` BIGINT  NOT NULL,
 		FOREIGN KEY (`person_id`)
-		REFERENCES `People` (`person_id`)
+		REFERENCES `people` (`person_id`)
 		ON DELETE CASCADE,
     `person_group_name` VARCHAR(255) NOT NULL
   );
 ALTER TABLE
-  `People_Groups`
+  `people_groups`
 ADD
   PRIMARY KEY (`person_group_name`, `person_id`);
 
 
--- Doors table #########################################################################
-CREATE TABLE `Doors`(
+-- doors table #########################################################################
+CREATE TABLE `doors`(
     `door_id` BIGINT NOT NULL,
     `door_name` VARCHAR(255) NOT NULL,
     `building_name` VARCHAR(255) NOT NULL,
     `floor_number` INT NOT NULL
   );
 ALTER TABLE
-  `Doors`
+  `doors`
 ADD
   PRIMARY KEY (`door_id`);
 
 
--- Door_Groups table #########################################################################
-CREATE TABLE `Door_Groups`(
+-- door_groups table #########################################################################
+CREATE TABLE `door_groups`(
     `door_id` BIGINT NOT NULL,
 	FOREIGN KEY (`door_id`)
-		REFERENCES `Doors` (`door_id`)
+		REFERENCES `doors` (`door_id`)
 		ON DELETE CASCADE,
     `door_group_name` VARCHAR(255) NOT NULL
   );
 ALTER TABLE
-  `Door_Groups`
+  `door_groups`
 ADD
   PRIMARY KEY (`door_group_name`, `door_id`);
   
@@ -68,13 +68,13 @@ CREATE TABLE `permissions`(
     `permission_id` BIGINT NOT NULL,
     `permission_type` VARCHAR(255) NOT NULL DEFAULT 'access' COMMENT 'permission type:
 
-\"Door Access\" - grants access to a door.
+\"door Access\" - grants access to a door.
 
 \"Admin Privileges\" - grants admin privilages to a door.
 
-\"Admin Add People\" - permitts adding people to the system.
+\"Admin Add people\" - permitts adding people to the system.
 
-\"Admin Add Doors\" - permitts adding doors to the system.
+\"Admin Add doors\" - permitts adding doors to the system.
 
 \"Admin Add permissions\" - permitts adding permissions to people for specific doors.
 
@@ -102,16 +102,16 @@ ADD
   PRIMARY KEY (`permission_set_name`, `permission_id`);
 
 
--- Peoples_Permissions_Doors table #########################################################################
-CREATE TABLE `Peoples_Permissions_Doors`(
+-- peoples_permissions_doors table #########################################################################
+CREATE TABLE `peoples_permissions_doors`(
     `person_group_name` VARCHAR(255) NOT NULL,
     FOREIGN KEY (person_group_name)
-	REFERENCES `People_Groups` (`person_group_name`)
+	REFERENCES `people_groups` (`person_group_name`)
 	ON DELETE CASCADE,
 	
     `door_group_name` VARCHAR(255) NOT NULL,
     FOREIGN KEY (`door_group_name`)
-	    REFERENCES `Door_Groups` (`door_group_name`)
+	    REFERENCES `door_groups` (`door_group_name`)
 	    ON DELETE CASCADE,
 
     `permission_set_name` VARCHAR(255) NOT NULL,
@@ -119,13 +119,13 @@ CREATE TABLE `Peoples_Permissions_Doors`(
 	REFERENCES `permission_sets` (`permission_set_name`)
 	ON DELETE CASCADE,
     
-    `Description` VARCHAR(255) NULL DEFAULT '000000',
+    `description` VARCHAR(255) NULL DEFAULT '000000',
     `initial_date` DATE NOT NULL COMMENT 'When does the permit start to take effect',
     `expiry_date` DATE NOT NULL COMMENT 'When does the permit expire'
 
   );
 ALTER TABLE
-  `Peoples_Permissions_Doors`
+  `peoples_permissions_doors`
 ADD
   PRIMARY KEY (
     `person_group_name`,
