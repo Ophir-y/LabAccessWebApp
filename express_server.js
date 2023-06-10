@@ -605,7 +605,7 @@ app.post("/Assign_Permissions", (req, res) => {
           people_groups.person_group_name,
           people_groups.door_group_name,
           people_groups.permission_set_name,
-          people_groups.description,
+          people_groups.Description,
           people_groups.initial_date,
           people_groups.expiry_date,
         ]),
