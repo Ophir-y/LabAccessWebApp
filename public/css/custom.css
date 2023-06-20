@@ -97,6 +97,15 @@ tbody tr:hover {
 .col-lg-1 {
   min-width: 1vw;
 }
+#login {
+  text-align: center;
+}
+
+.colHome {
+  flex: 1 0 0;
+  width: 10%;
+  padding: 1;
+}
 /*######################### form styles ###################### */
 #formSide-Div {
   border-right: 1px solid;
